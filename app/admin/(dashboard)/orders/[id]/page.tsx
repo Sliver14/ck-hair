@@ -10,8 +10,13 @@ interface OrderDetailPageProps {
 }
 
 export default async function AdminOrderDetailPage({ params }: OrderDetailPageProps) {
-  const order = await prisma.order.findUnique({
-    where: { id: params.id },
+  const order = await prisma.order.findFirst({
+    where: {
+      OR: [
+        { id: params.id },
+        { orderNumber: params.id },
+      ],
+    },
     include: {
       items: true,
       statusHistory: { orderBy: { createdAt: "desc" } },
@@ -24,5 +29,8 @@ export default async function AdminOrderDetailPage({ params }: OrderDetailPagePr
     notFound();
   }
 
-  return <OrderDetailView order={order} />;
+  // Safe JSON serialization for client component boundary
+  const serializedOrder = JSON.parse(JSON.stringify(order));
+
+  return <OrderDetailView order={serializedOrder} />;
 }

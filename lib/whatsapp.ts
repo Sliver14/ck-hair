@@ -58,8 +58,9 @@ I have made my bank transfer payment and I am sending this to confirm my order.
 Thank you!`;
 }
 
-export function generateWhatsAppUrl(phone: string, text: string): string {
-  const cleanPhone = phone.replace(/[^0-9]/g, "");
+export function generateWhatsAppUrl(phone?: string | null, text: string = ""): string {
+  const safePhone = (phone || "2348012345678").toString().replace(/[^0-9]/g, "");
   const encodedText = encodeURIComponent(text);
-  return `https://wa.me/${cleanPhone}?text=${encodedText}`;
+  return `https://wa.me/${safePhone}?text=${encodedText}`;
 }
+

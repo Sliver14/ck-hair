@@ -21,8 +21,8 @@ export default async function AdminPreordersPage() {
 
   return (
     <PreorderManager
-      orders={orders}
-      preorderProducts={preorderProducts}
+      orders={JSON.parse(JSON.stringify(orders))}
+      preorderProducts={JSON.parse(JSON.stringify(preorderProducts))}
     />
   );
 }

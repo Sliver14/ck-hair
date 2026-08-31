@@ -24,8 +24,8 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
 
   return (
     <ProductForm
-      initialData={product}
-      categories={categories}
+      initialData={JSON.parse(JSON.stringify(product))}
+      categories={JSON.parse(JSON.stringify(categories))}
       isEditing={true}
     />
   );

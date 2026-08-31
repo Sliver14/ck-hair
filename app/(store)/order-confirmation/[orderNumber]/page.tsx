@@ -24,8 +24,8 @@ export default async function OrderConfirmationPage({
 
   return (
     <OrderConfirmationView
-      order={order}
-      paymentSettings={paymentSettings}
+      order={JSON.parse(JSON.stringify(order))}
+      paymentSettings={JSON.parse(JSON.stringify(paymentSettings))}
     />
   );
 }

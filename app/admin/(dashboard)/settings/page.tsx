@@ -15,10 +15,10 @@ export default async function AdminSettingsPage() {
 
   return (
     <SettingsManager
-      storeSettings={store}
-      paymentSettings={payment}
-      homepageSettings={homepage}
-      subscribers={subscribers}
+      storeSettings={JSON.parse(JSON.stringify(store))}
+      paymentSettings={JSON.parse(JSON.stringify(payment))}
+      homepageSettings={JSON.parse(JSON.stringify(homepage))}
+      subscribers={JSON.parse(JSON.stringify(subscribers))}
     />
   );
 }

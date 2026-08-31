@@ -45,8 +45,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <ProductDetailView
-      product={product}
-      relatedProducts={filteredRelated}
+      product={JSON.parse(JSON.stringify(product))}
+      relatedProducts={JSON.parse(JSON.stringify(filteredRelated))}
       whatsappNumber={storeSettings.whatsapp}
     />
   );
