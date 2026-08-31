@@ -1,0 +1,255 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String
+  whatsapp  String?
+  address   String?
+  city      String?
+  state     String?
+  country   String   @default("Nigeria")
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  image       String?
+  featured    Boolean   @default(false)
+  order       Int       @default(0)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id                  String           @id @default(uuid())
+  name                String
+  slug                String           @unique
+  description         String
+  shortDescription    String?
+  price               Float
+  compareAtPrice      Float?
+  sku                 String?          @unique
+  categoryId          String
+  category            Category         @relation(fields: [categoryId], references: [id])
+  images              ProductImage[]
+  variants            ProductVariant[]
+  stock               Int              @default(10)
+  status              String           @default("ACTIVE") // ACTIVE, DRAFT, DISABLED
+  availability        String           @default("IN_STOCK") // IN_STOCK, PREORDER, OUT_OF_STOCK
+  hairType            String?          // Virgin Hair, Raw Hair, Human Hair
+  texture             String?          // Body Wave, Bone Straight, Deep Wave, Kinky Curly, etc.
+  lengths             String?          // JSON array string e.g. ["14\"", "16\"", "18\""]
+  colors              String?          // JSON array string e.g. ["Natural Black", "Jet Black"]
+  featured            Boolean          @default(false)
+  bestseller          Boolean          @default(false)
+  isNew               Boolean          @default(false)
+  preorderEnabled     Boolean          @default(false)
+  preorderDuration    String?          @default("2–4 weeks")
+  preorderClosingDate DateTime?
+  preorderLimit       Int?
+  orderItems          OrderItem[]
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+}
+
+model ProductImage {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  alt       String?
+  isPrimary Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model ProductVariant {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name      String   // e.g. "20\" / Natural Black"
+  length    String?  // e.g. "20\""
+  texture   String?  // e.g. "Body Wave"
+  color     String?  // e.g. "Natural Black"
+  price     Float
+  sku       String?
+  stock     Int      @default(10)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id              String               @id @default(uuid())
+  orderNumber     String               @unique // e.g. CKH-20260831-001
+  customerId      String?
+  customer        Customer?            @relation(fields: [customerId], references: [id])
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  customerWhatsapp String?
+  type            String               @default("REGULAR") // REGULAR, PREORDER
+  status          String               @default("AWAITING_PAYMENT")
+  // REGULAR: PENDING, AWAITING_PAYMENT, PAYMENT_CONFIRMED, PROCESSING, READY_FOR_DELIVERY, SHIPPED, COMPLETED, CANCELLED
+  // PREORDER: PREORDER_PLACED, AWAITING_PAYMENT, PAYMENT_CONFIRMED, PREORDER_PROCESSING, STOCK_ARRIVED, PREPARING_ORDER, READY_FOR_DELIVERY, SHIPPED, COMPLETED, CANCELLED
+  paymentStatus   String               @default("UNPAID") // UNPAID, PAYMENT_SUBMITTED, PAYMENT_CONFIRMED, PAYMENT_REJECTED, REFUNDED
+  subtotal        Float
+  deliveryFee     Float                @default(0)
+  total           Float
+  deliveryAddress String
+  city            String
+  state           String
+  country         String               @default("Nigeria")
+  customerNotes   String?
+  adminNotes      String?
+  isPreorder      Boolean              @default(false)
+  preorderBatch   String?
+  items           OrderItem[]
+  statusHistory   OrderStatusHistory[]
+  payments        Payment[]
+  completedAt     DateTime?
+  completedBy     String?
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+}
+
+model OrderItem {
+  id                  String   @id @default(uuid())
+  orderId             String
+  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId           String?
+  product             Product? @relation(fields: [productId], references: [id])
+  productNameSnapshot String
+  variantNameSnapshot String?
+  productImageSnapshot String?
+  isPreorder          Boolean  @default(false)
+  preorderDuration    String?
+  quantity            Int
+  unitPrice           Float
+  totalPrice          Float
+  createdAt           DateTime @default(now())
+}
+
+model OrderStatusHistory {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  oldStatus String?
+  newStatus String
+  changedBy String   @default("System")
+  note      String?
+  createdAt DateTime @default(now())
+}
+
+model Payment {
+  id          String    @id @default(uuid())
+  orderId     String
+  order       Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  status      String    @default("UNPAID") // UNPAID, PAYMENT_SUBMITTED, PAYMENT_CONFIRMED, PAYMENT_REJECTED, REFUNDED
+  method      String    @default("BANK_TRANSFER")
+  amount      Float
+  reference   String?
+  receiptUrl  String?
+  notes       String?
+  confirmedAt DateTime?
+  confirmedBy String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model StoreSettings {
+  id                    String   @id @default("default")
+  storeName             String   @default("CK Hair")
+  tagline               String   @default("Luxury Hair. Effortless Confidence.")
+  logo                  String?
+  favicon               String?
+  description           String   @default("Premium hair crafted to elevate your everyday beauty.")
+  email                 String   @default("contact@ckhair.com")
+  phone                 String   @default("+234 801 234 5678")
+  whatsapp              String   @default("2348012345678")
+  address               String   @default("Victoria Island, Lagos, Nigeria")
+  instagram             String   @default("https://instagram.com/ckhair")
+  tiktok                String   @default("https://tiktok.com/@ckhair")
+  facebook              String   @default("https://facebook.com/ckhair")
+  currency              String   @default("NGN")
+  currencySymbol        String   @default("₦")
+  defaultDeliveryFee    Float    @default(5000)
+  freeDeliveryThreshold Float    @default(500000)
+  storeStatus           String   @default("ONLINE") // ONLINE, OFFLINE
+  maintenanceMessage    String   @default("CK Hair is currently preparing something beautiful. Please check back shortly.")
+  updatedAt             DateTime @updatedAt
+}
+
+model PaymentSettings {
+  id                     String   @id @default("default")
+  bankName               String   @default("GTBank")
+  accountName            String   @default("CK Hair Luxury Limited")
+  accountNumber          String   @default("0123456789")
+  paymentInstructions    String   @default("Please make payment to the account above and click the button below to send your payment confirmation with your Order Number to CK Hair via WhatsApp.")
+  whatsappNumber         String   @default("2348012345678")
+  whatsappMessageTemplate String?
+  updatedAt              DateTime @updatedAt
+}
+
+model HomepageSettings {
+  id                     String   @id @default("default")
+  heroTitle              String   @default("LUXURY HAIR.\nEFFORTLESS CONFIDENCE.")
+  heroSubtitle           String   @default("Premium 100% human and raw hair crafted to elevate your everyday beauty.")
+  heroImage              String   @default("https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=85")
+  primaryCtaText         String   @default("SHOP COLLECTION")
+  primaryCtaLink         String   @default("/shop")
+  secondaryCtaText       String   @default("PRE-ORDER")
+  secondaryCtaLink       String   @default("/preorder")
+  announcementText       String   @default("COMPLIMENTARY NATIONWIDE DELIVERY ON ORDERS ABOVE ₦500,000")
+  announcementEnabled    Boolean  @default(true)
+  editorialTitle         String   @default("THE CK HAIR EXPERIENCE")
+  editorialSubtitle      String   @default("Hair that feels as pure, luscious, and unforgettable as it looks.")
+  editorialImage         String   @default("https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85")
+  updatedAt              DateTime @updatedAt
+}
+
+model Promotion {
+  id        String    @id @default(uuid())
+  title     String
+  code      String?   @unique
+  discount  Float?
+  text      String
+  enabled   Boolean   @default(true)
+  startDate DateTime?
+  endDate   DateTime?
+  cta       String?
+  ctaLink   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  status    String   @default("ACTIVE")
+  createdAt DateTime @default(now())
+}
