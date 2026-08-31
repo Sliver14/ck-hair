@@ -5,7 +5,7 @@ interface InstagramGridProps {
   instagramUrl?: string;
 }
 
-export function InstagramGrid({ instagramUrl = "https://instagram.com/ckhair" }: InstagramGridProps) {
+export function InstagramGrid({ instagramUrl = "https://instagram.com/CK_Hair.Ng" }: InstagramGridProps) {
   const images = [
     "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80",
     "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80",
@@ -22,8 +22,8 @@ export function InstagramGrid({ instagramUrl = "https://instagram.com/ckhair" }:
           <span className="text-[11px] uppercase tracking-[0.22em] text-brand-gold font-bold block">
             Social Inspiration
           </span>
-          <h2 className="font-serif-luxury text-3xl md:text-4xl font-bold text-brand-dark">
-            FOLLOW @CKHAIR
+          <h2 className="font-serif-luxury text-3xl md:text-4xl font-bold text-brand-dark uppercase">
+            FOLLOW @CK_Hair.Ng
           </h2>
           <p className="text-xs md:text-sm text-brand-muted font-light">
             Tag us in your looks with <span className="font-medium text-brand-dark">#CKHairLuxury</span> to be featured.

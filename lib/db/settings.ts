@@ -20,12 +20,12 @@ export async function getStoreSettings() {
       logo: null,
       favicon: null,
       description: "Premium hair crafted to elevate your everyday beauty.",
-      email: "orders@ckhair.com",
-      phone: "+234 801 234 5678",
-      whatsapp: "2348012345678",
+      email: "ckhair.ng@gmail.com",
+      phone: "+234 902 655 5783",
+      whatsapp: "2349026555783",
       address: "Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
-      instagram: "https://instagram.com/ckhair",
-      tiktok: "https://tiktok.com/@ckhair",
+      instagram: "https://instagram.com/CK_Hair.Ng",
+      tiktok: "https://tiktok.com/@ck.hair0",
       facebook: "https://facebook.com/ckhair",
       currency: "NGN",
       currencySymbol: "₦",
@@ -45,7 +45,7 @@ export async function getPaymentSettings() {
     });
     if (!settings) {
       settings = await prisma.paymentSettings.create({
-        data: { id: "default" },
+        data: { id: "default", whatsappNumber: "2349026555783" },
       });
     }
     return settings;
@@ -57,7 +57,7 @@ export async function getPaymentSettings() {
       accountName: "CK Hair Luxury Global Ltd",
       accountNumber: "0123456789",
       paymentInstructions: "Please make your direct bank transfer to the account details above. Once paid, click the WhatsApp button to send your payment receipt/screenshot and order confirmation.",
-      whatsappNumber: "2348012345678",
+      whatsappNumber: "2349026555783",
       whatsappMessageTemplate: null,
       updatedAt: new Date(),
     };

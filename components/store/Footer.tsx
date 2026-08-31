@@ -17,12 +17,12 @@ interface FooterProps {
 export function Footer({
   storeName = "CK HAIR",
   tagline = "Luxury Hair. Effortless Confidence.",
-  phone = "+234 801 234 5678",
-  email = "orders@ckhair.com",
+  phone = "+234 902 655 5783",
+  email = "ckhair.ng@gmail.com",
   address = "Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
-  whatsapp = "2348012345678",
-  instagram = "https://instagram.com/ckhair",
-  tiktok = "https://tiktok.com/@ckhair",
+  whatsapp = "2349026555783",
+  instagram = "https://instagram.com/CK_Hair.Ng",
+  tiktok = "https://tiktok.com/@ck.hair0",
   facebook = "https://facebook.com/ckhair",
 }: FooterProps) {
   return (

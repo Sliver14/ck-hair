@@ -188,12 +188,12 @@ model StoreSettings {
   logo                  String?
   favicon               String?
   description           String   @default("Premium hair crafted to elevate your everyday beauty.")
-  email                 String   @default("contact@ckhair.com")
-  phone                 String   @default("+234 801 234 5678")
-  whatsapp              String   @default("2348012345678")
-  address               String   @default("Victoria Island, Lagos, Nigeria")
-  instagram             String   @default("https://instagram.com/ckhair")
-  tiktok                String   @default("https://tiktok.com/@ckhair")
+  email                 String   @default("ckhair.ng@gmail.com")
+  phone                 String   @default("+234 902 655 5783")
+  whatsapp              String   @default("2349026555783")
+  address               String   @default("Admiralty Way, Lekki Phase 1, Lagos, Nigeria")
+  instagram             String   @default("https://instagram.com/CK_Hair.Ng")
+  tiktok                String   @default("https://tiktok.com/@ck.hair0")
   facebook              String   @default("https://facebook.com/ckhair")
   currency              String   @default("NGN")
   currencySymbol        String   @default("₦")
@@ -210,7 +210,7 @@ model PaymentSettings {
   accountName            String   @default("CK Hair Luxury Limited")
   accountNumber          String   @default("0123456789")
   paymentInstructions    String   @default("Please make payment to the account above and click the button below to send your payment confirmation with your Order Number to CK Hair via WhatsApp.")
-  whatsappNumber         String   @default("2348012345678")
+  whatsappNumber         String   @default("2349026555783")
   whatsappMessageTemplate String?
   updatedAt              DateTime @updatedAt
 }
