@@ -20,9 +20,10 @@ export async function getActiveProducts(options?: {
   if (options?.preorderOnly) where.availability = "PREORDER";
 
   if (options?.categorySlug) {
-    where.category = {
-      slug: options.categorySlug,
-    };
+    where.OR = [
+      { category: { slug: options.categorySlug } },
+      { category: { parent: { slug: options.categorySlug } } },
+    ];
   }
 
   if (options?.search) {
@@ -43,7 +44,9 @@ export async function getActiveProducts(options?: {
   return prisma.product.findMany({
     where,
     include: {
-      category: true,
+      category: {
+        include: { parent: true },
+      },
       images: { orderBy: { order: "asc" } },
       variants: { orderBy: { price: "asc" } },
     },
@@ -56,7 +59,9 @@ export async function getProductBySlug(slug: string) {
   return prisma.product.findUnique({
     where: { slug },
     include: {
-      category: true,
+      category: {
+        include: { parent: true },
+      },
       images: { orderBy: { order: "asc" } },
       variants: { orderBy: { price: "asc" } },
     },
@@ -67,6 +72,14 @@ export async function getCategories() {
   return prisma.category.findMany({
     orderBy: { order: "asc" },
     include: {
+      parent: true,
+      children: {
+        include: {
+          _count: {
+            select: { products: { where: { status: "ACTIVE" } } },
+          },
+        },
+      },
       _count: {
         select: {
           products: {

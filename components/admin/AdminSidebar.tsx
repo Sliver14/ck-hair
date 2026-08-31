@@ -57,16 +57,20 @@ export function AdminSidebar() {
   return (
     <aside className="w-64 bg-[#141414] text-[#E0E0DC] border-r border-[#262626] flex flex-col justify-between shrink-0 h-screen sticky top-0">
       {/* Brand Header */}
-      <div className="p-6 border-b border-[#262626] flex items-center justify-between">
-        <Link href="/admin/dashboard" className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-full bg-brand-gold text-brand-dark flex items-center justify-center font-serif text-xs font-bold">
-            CK
+      <div className="p-5 border-b border-[#262626] flex items-center justify-between">
+        <Link href="/admin/dashboard" className="flex items-center gap-3">
+          <div className="p-1 rounded-xl bg-[#FAF6F2] shadow-xs">
+            <img
+              src="/logo.png"
+              alt="CK Hair"
+              className="h-8 w-auto object-contain"
+            />
           </div>
           <div>
             <span className="font-serif-luxury text-base font-bold tracking-[0.18em] text-white uppercase block">
               CK HAIR
             </span>
-            <span className="text-[9px] uppercase tracking-widest text-[#888880] block -mt-0.5">
+            <span className="text-[9px] uppercase tracking-widest text-[#B76E79] block -mt-0.5 font-semibold">
               Admin Portal
             </span>
           </div>

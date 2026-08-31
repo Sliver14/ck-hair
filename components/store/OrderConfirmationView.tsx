@@ -57,16 +57,16 @@ export function OrderConfirmationView({
   );
 
   return (
-    <div className="py-12 md:py-20 bg-[#FAFAF8] min-h-screen">
+    <div className="py-12 md:py-20 bg-[#FAF6F2] min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Success Banner */}
         <div className="text-center space-y-3 bg-white p-8 md:p-12 rounded-3xl border border-brand-border/60 shadow-xs">
-          <div className="w-16 h-16 rounded-full bg-brand-sand flex items-center justify-center mx-auto text-brand-dark">
+          <div className="w-16 h-16 rounded-full bg-[#EAD7C3]/50 flex items-center justify-center mx-auto text-brand-dark">
             <CheckCircle2 className="w-8 h-8 text-green-700 stroke-[1.5]" />
           </div>
 
-          <span className="text-[11px] uppercase tracking-[0.25em] text-brand-gold font-bold block">
+          <span className="text-[11px] uppercase tracking-[0.25em] text-[#B76E79] font-bold block">
             {order.isPreorder ? "Pre-Order Received" : "Order Received"}
           </span>
 
@@ -78,47 +78,47 @@ export function OrderConfirmationView({
             Your order has been registered. Please complete payment via direct bank transfer below and notify our concierge on WhatsApp.
           </p>
 
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-brand-sand border border-brand-border text-xs font-mono font-bold text-brand-dark">
+          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#EAD7C3]/40 border border-brand-border text-xs font-mono font-bold text-brand-dark">
             <span>ORDER REF:</span>
-            <span className="text-brand-gold">{order.orderNumber}</span>
+            <span className="text-[#B76E79]">{order.orderNumber}</span>
           </div>
         </div>
 
         {/* Payment Account Details Box */}
-        <div className="bg-[#121212] text-white p-8 md:p-10 rounded-3xl border border-brand-border/20 shadow-xl space-y-6">
+        <div className="bg-[#2B2118] text-[#FAF6F2] p-8 md:p-10 rounded-3xl border border-[#3E3025] shadow-xl space-y-6">
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div className="flex items-center gap-3">
-              <Building className="w-6 h-6 text-brand-gold" />
+              <Building className="w-6 h-6 text-[#B76E79]" />
               <div>
-                <h2 className="font-serif-luxury text-xl md:text-2xl font-bold text-white">
+                <h2 className="font-serif-luxury text-xl md:text-2xl font-bold text-[#FAF6F2]">
                   CK HAIR PAYMENT DETAILS
                 </h2>
-                <p className="text-[11px] text-[#9E9E96]">
+                <p className="text-[11px] text-[#D8C7B8]">
                   Guaranty Trust Bank (GTBank) Direct Transfer
                 </p>
               </div>
             </div>
 
-            <span className="text-xs font-mono uppercase tracking-widest bg-white/10 text-brand-sand px-3 py-1 rounded-full">
+            <span className="text-xs font-mono uppercase tracking-widest bg-white/10 text-[#EAD7C3] px-3 py-1 rounded-full border border-white/10">
               Status: Awaiting Payment
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
             <div className="space-y-1">
-              <span className="text-[#888880] uppercase tracking-wider block text-[10px]">Bank Name</span>
+              <span className="text-[#A39488] uppercase tracking-wider block text-[10px]">Bank Name</span>
               <p className="text-base font-semibold text-white">{paymentSettings.bankName}</p>
             </div>
 
             <div className="space-y-1">
-              <span className="text-[#888880] uppercase tracking-wider block text-[10px]">Account Name</span>
+              <span className="text-[#A39488] uppercase tracking-wider block text-[10px]">Account Name</span>
               <p className="text-base font-semibold text-white">{paymentSettings.accountName}</p>
             </div>
 
             <div className="space-y-1">
-              <span className="text-[#888880] uppercase tracking-wider block text-[10px]">Account Number</span>
+              <span className="text-[#A39488] uppercase tracking-wider block text-[10px]">Account Number</span>
               <div className="flex items-center gap-2">
-                <p className="text-lg font-mono font-bold text-brand-gold tracking-wider">
+                <p className="text-lg font-mono font-bold text-[#B76E79] tracking-wider">
                   {paymentSettings.accountNumber}
                 </p>
                 <button
@@ -221,10 +221,14 @@ export function OrderConfirmationView({
 
             <div className="space-y-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-brand-dark block">
-                Delivery Address
+                {order.deliveryAddress?.toLowerCase().includes("pickup")
+                  ? "Fulfillment (Store Pickup)"
+                  : "Delivery Address"}
               </span>
               <p className="font-medium text-brand-dark">{order.deliveryAddress}</p>
-              <p>{order.city}, {order.state}, Nigeria</p>
+              {!order.deliveryAddress?.toLowerCase().includes("pickup") && (
+                <p>{order.city}, {order.state}, Nigeria</p>
+              )}
               {order.customerNotes && <p className="italic">Note: "{order.customerNotes}"</p>}
             </div>
           </div>
@@ -236,7 +240,11 @@ export function OrderConfirmationView({
               <span className="font-semibold text-brand-dark">{formatPrice(order.subtotal)}</span>
             </div>
             <div className="flex justify-between text-brand-muted">
-              <span>Nationwide Delivery</span>
+              <span>
+                {order.deliveryAddress?.toLowerCase().includes("pickup")
+                  ? "Store Pickup"
+                  : "Nationwide Delivery"}
+              </span>
               <span className="font-semibold text-brand-dark">
                 {order.deliveryFee === 0 ? "FREE" : formatPrice(order.deliveryFee)}
               </span>

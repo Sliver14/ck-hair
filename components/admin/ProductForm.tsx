@@ -1,14 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Save, Plus, Trash2, Clock, Sparkles } from "lucide-react";
+import { ArrowLeft, Save, Plus, Trash2, Clock, Sparkles, RefreshCw } from "lucide-react";
 
 interface ProductFormProps {
   initialData?: any;
   categories: any[];
   isEditing?: boolean;
+}
+
+function generateSku(name: string = ""): string {
+  const prefix = "CKH";
+  const clean = name
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "")
+    .slice(0, 4);
+  const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+  return clean ? `${prefix}-${clean}-${randomSuffix}` : `${prefix}-${randomSuffix}`;
 }
 
 export function ProductForm({
@@ -25,13 +35,20 @@ export function ProductForm({
     shortDescription: initialData?.shortDescription || "",
     price: initialData?.price || "",
     compareAtPrice: initialData?.compareAtPrice || "",
-    sku: initialData?.sku || "",
+    sku: initialData?.sku || (isEditing ? "" : generateSku(initialData?.name || "")),
     categoryId: initialData?.categoryId || categories[0]?.id || "",
     stock: initialData?.stock || 10,
     status: initialData?.status || "ACTIVE",
     availability: initialData?.availability || "IN_STOCK",
     hairType: initialData?.hairType || "Virgin Human Hair",
     texture: initialData?.texture || "Body Wave",
+    formats: initialData?.formats
+      ? typeof initialData.formats === "string"
+        ? JSON.parse(initialData.formats).join(", ")
+        : Array.isArray(initialData.formats)
+        ? initialData.formats.join(", ")
+        : ""
+      : "Braiding Hair, Weft",
     lengths: initialData?.lengths
       ? JSON.parse(initialData.lengths).join(", ")
       : '16", 18", 20", 22", 24"',
@@ -62,6 +79,38 @@ export function ProductForm({
     if (type === "checkbox") {
       const checked = (e.target as HTMLInputElement).checked;
       setFormData((prev) => ({ ...prev, [name]: checked }));
+    } else if (name === "name") {
+      setFormData((prev) => {
+        const generatedSlug = value
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, "");
+
+        // Auto-generate SKU on name entry for new products or empty SKU
+        const shouldUpdateSku = !isEditing && (!prev.sku || prev.sku.startsWith("CKH-"));
+        return {
+          ...prev,
+          name: value,
+          slug: !isEditing ? generatedSlug : prev.slug,
+          sku: shouldUpdateSku ? generateSku(value) : prev.sku,
+        };
+      });
+    } else if (name === "stock") {
+      const parsed = parseInt(value);
+      if (!isNaN(parsed) && parsed > 0) {
+        setFormData((prev) => ({
+          ...prev,
+          stock: parsed,
+          availability: prev.availability === "PREORDER" ? "IN_STOCK" : prev.availability,
+        }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          stock: value === "" ? "" : 0,
+          availability: "PREORDER",
+          preorderEnabled: true,
+        }));
+      }
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -91,9 +140,16 @@ export function ProductForm({
         .split(",")
         .map((s: string) => s.trim())
         .filter(Boolean);
+      const parsedFormats = formData.formats
+        ? formData.formats
+            .split(",")
+            .map((s: string) => s.trim())
+            .filter(Boolean)
+        : [];
 
       const payload = {
         ...formData,
+        formats: parsedFormats,
         lengths: parsedLengths,
         colors: parsedColors,
         images,
@@ -198,16 +254,33 @@ export function ProductForm({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                  SKU (Stock Keeping Unit)
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                    SKU (Stock Keeping Unit) *
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        sku: generateSku(prev.name || "ITEM"),
+                      }))
+                    }
+                    className="text-[10px] text-[#B76E79] hover:text-[#2B2118] font-bold uppercase tracking-wider flex items-center gap-1 transition-colors"
+                    title="Auto-generate new SKU"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    <span>Auto Generate</span>
+                  </button>
+                </div>
                 <input
                   type="text"
                   name="sku"
+                  required
                   value={formData.sku}
                   onChange={handleChange}
-                  placeholder="e.g. CK-BW-001"
-                  className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
+                  placeholder="e.g. CKH-BW-1024"
+                  className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-xs font-mono font-semibold tracking-wider outline-none focus:border-brand-dark bg-[#FAFAF8]"
                 />
               </div>
 
@@ -223,7 +296,7 @@ export function ProductForm({
                 >
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>
-                      {c.name}
+                      {c.parent ? `${c.parent.name} → ${c.name}` : c.name}
                     </option>
                   ))}
                 </select>
@@ -345,6 +418,20 @@ export function ProductForm({
                   className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
                 />
               </div>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                Hair Formats / Types (e.g. Braiding Hair, Weft)
+              </label>
+              <input
+                type="text"
+                name="formats"
+                value={formData.formats}
+                onChange={handleChange}
+                placeholder="e.g. Braiding Hair, Weft"
+                className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
+              />
             </div>
 
             <div className="space-y-1.5">

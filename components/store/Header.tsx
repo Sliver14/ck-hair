@@ -30,7 +30,6 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "Shop", href: "/shop" },
-    { label: "Collections", href: "/collections" },
     { label: "Pre-Order", href: "/preorder" },
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
@@ -42,7 +41,7 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
         className={`sticky top-0 z-40 w-full transition-all duration-300 ${
           isScrolled
             ? "bg-white/95 backdrop-blur-md shadow-xs border-b border-brand-border/60 py-3.5"
-            : "bg-[#FAFAF8]/90 backdrop-blur-xs border-b border-transparent py-5"
+            : "bg-[#FAF6F2]/90 backdrop-blur-xs border-b border-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -68,15 +67,13 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
           <div className="flex items-center">
             <Link
               href="/"
-              className="group flex items-center gap-2"
+              className="group flex items-center gap-3"
             >
-              {/* Luxury Icon / Monogram */}
-              <div className="w-8 h-8 rounded-full border border-brand-dark flex items-center justify-center font-serif text-sm font-bold tracking-tighter bg-brand-dark text-white group-hover:bg-black transition-colors">
-                CK
-              </div>
-              <span className="font-serif-luxury text-xl md:text-2xl font-bold tracking-[0.2em] text-brand-dark uppercase">
-                {storeName}
-              </span>
+              <img
+                src="/logo.png"
+                alt={storeName || "CK Hair"}
+                className="h-10 sm:h-12 md:h-14 w-auto object-contain transition-transform group-hover:scale-105"
+              />
             </Link>
           </div>
 
@@ -96,7 +93,7 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
                 >
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-brand-dark rounded-full" />
+                    <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-[#B76E79] rounded-full" />
                   )}
                 </Link>
               );
@@ -129,7 +126,7 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
               <div className="relative">
                 <ShoppingBag className="w-5 h-5 stroke-[1.5]" />
                 {totalCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-brand-dark text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                  <span className="absolute -top-1.5 -right-2 bg-[#B76E79] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-xs">
                     {totalCount}
                   </span>
                 )}
@@ -154,12 +151,11 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
               <div>
                 <div className="flex items-center justify-between pb-6 border-b border-brand-border">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-brand-dark text-white flex items-center justify-center font-serif text-xs font-bold">
-                      CK
-                    </div>
-                    <span className="font-serif-luxury text-lg font-bold tracking-[0.2em] uppercase">
-                      {storeName}
-                    </span>
+                    <img
+                      src="/logo.png"
+                      alt={storeName || "CK Hair"}
+                      className="h-10 w-auto object-contain"
+                    />
                   </div>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}

@@ -6,12 +6,12 @@ export const revalidate = 0;
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#FAFAF8] min-h-screen py-16 md:py-24">
+    <div className="bg-[#FAF6F2] min-h-screen py-16 md:py-24">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 md:space-y-24">
         
         {/* Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <span className="text-[11px] uppercase tracking-[0.25em] text-brand-gold font-bold block">
+          <span className="text-[11px] uppercase tracking-[0.25em] text-[#B76E79] font-bold block">
             Our Heritage & Vision
           </span>
           <h1 className="font-serif-luxury text-4xl sm:text-5xl md:text-6xl font-bold text-brand-dark tracking-tight leading-tight">

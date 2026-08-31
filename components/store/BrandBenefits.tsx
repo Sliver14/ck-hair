@@ -36,7 +36,7 @@ export function BrandBenefits() {
                 key={idx}
                 className="flex flex-col items-center text-center sm:items-start sm:text-left space-y-3 group"
               >
-                <div className="w-12 h-12 rounded-full bg-brand-sand flex items-center justify-center text-brand-dark group-hover:bg-brand-dark group-hover:text-white transition-colors duration-300">
+                <div className="w-12 h-12 rounded-full bg-[#EAD7C3]/50 flex items-center justify-center text-[#2B2118] group-hover:bg-[#2B2118] group-hover:text-[#B76E79] transition-all duration-300">
                   <Icon className="w-5 h-5 stroke-[1.5]" />
                 </div>
                 <h3 className="font-serif-luxury text-base md:text-lg font-bold tracking-wide text-brand-dark uppercase">

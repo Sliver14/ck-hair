@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { formatPrice, formatDate } from "@/lib/formatters";
 import { PlusCircle, Edit3, Eye, Clock, CheckCircle2, XCircle } from "lucide-react";
 import { ProductStatusToggle } from "@/components/admin/ProductStatusToggle";
+import { QuickRestockButton } from "@/components/admin/QuickRestockButton";
 
 export const revalidate = 0;
 
@@ -92,13 +93,15 @@ export default async function AdminProductsPage() {
                   </td>
 
                   <td className="py-4 px-6">
-                    <span className="font-semibold text-brand-dark">
-                      {prod.availability === "PREORDER" ? "Pre-order" : `${prod.stock} units`}
-                    </span>
+                    <QuickRestockButton
+                      productId={prod.id}
+                      currentStock={prod.stock}
+                      availability={prod.availability}
+                    />
                   </td>
 
                   <td className="py-4 px-6">
-                    {prod.availability === "PREORDER" ? (
+                    {prod.availability === "PREORDER" || prod.stock <= 0 ? (
                       <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-full bg-purple-100 text-purple-800">
                         <Clock className="w-3 h-3" />
                         <span>Pre-Order</span>

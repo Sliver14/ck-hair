@@ -14,7 +14,7 @@ export function EditorialStory({
   image = "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
 }: EditorialStoryProps) {
   return (
-    <section className="py-16 md:py-24 bg-[#FAF8F5] border-b border-brand-border/60">
+    <section className="py-16 md:py-24 bg-[#FAF6F2] border-b border-brand-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Editorial Image */}
@@ -27,9 +27,9 @@ export function EditorialStory({
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-white">
-                <div className="flex items-center gap-1 mb-2 text-brand-gold">
+                <div className="flex items-center gap-1 mb-2 text-[#B76E79]">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />
+                    <Star key={i} className="w-4 h-4 fill-[#B76E79] text-[#B76E79]" />
                   ))}
                 </div>
                 <p className="font-serif-luxury text-xl md:text-2xl font-light italic">
@@ -41,7 +41,7 @@ export function EditorialStory({
 
           {/* Text Story */}
           <div className="lg:col-span-6 space-y-6 md:space-y-8">
-            <span className="text-[11px] uppercase tracking-[0.22em] text-brand-gold font-bold block">
+            <span className="text-[11px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block">
               Our Philosophy
             </span>
             <h2 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark leading-tight">

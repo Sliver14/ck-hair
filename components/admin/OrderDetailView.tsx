@@ -216,11 +216,22 @@ export function OrderDetailView({ order: initialOrder }: OrderDetailViewProps) {
             </div>
 
             <div className="bg-white rounded-2xl border border-brand-border/60 shadow-xs p-6 space-y-3 text-xs">
-              <h3 className="font-serif-luxury text-base font-bold text-brand-dark border-b border-brand-border/60 pb-2">
-                Delivery Destination
+              <h3 className="font-serif-luxury text-base font-bold text-brand-dark border-b border-brand-border/60 pb-2 flex items-center justify-between">
+                <span>
+                  {order.deliveryAddress?.toLowerCase().includes("pickup")
+                    ? "Fulfillment (Store Pickup)"
+                    : "Delivery Destination"}
+                </span>
+                {order.deliveryAddress?.toLowerCase().includes("pickup") && (
+                  <span className="text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-800">
+                    Store Pickup
+                  </span>
+                )}
               </h3>
               <p className="text-brand-dark font-medium">{order.deliveryAddress}</p>
-              <p className="text-brand-muted">{order.city}, {order.state}, Nigeria</p>
+              {!order.deliveryAddress?.toLowerCase().includes("pickup") && (
+                <p className="text-brand-muted">{order.city}, {order.state}, Nigeria</p>
+              )}
               {order.customerNotes && (
                 <div className="p-2.5 rounded-lg bg-brand-sand/50 text-[11px] text-brand-dark">
                   <span className="font-bold block">Customer Note:</span>

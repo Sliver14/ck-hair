@@ -9,18 +9,23 @@ export interface CartItem {
   slug: string;
   price: number;
   image: string;
+  format?: string | null;
   variantName?: string | null;
   length?: string | null;
   color?: string | null;
   texture?: string | null;
   quantity: number;
+  stock?: number | null;
   isPreorder: boolean;
   preorderDuration?: string | null;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (item: Omit<CartItem, "id"> & { id?: string }) => void;
+  addItem: (
+    item: Omit<CartItem, "id"> & { id?: string },
+    options?: { openDrawer?: boolean }
+  ) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
@@ -31,6 +36,8 @@ interface CartContextType {
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
+  lastAddedItem: CartItem | null;
+  dismissToast: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -41,6 +48,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [lastAddedItem, setLastAddedItem] = useState<CartItem | null>(null);
 
   // Load from LocalStorage
   useEffect(() => {
@@ -65,22 +73,49 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, isHydrated]);
 
-  const addItem = (itemToAdd: Omit<CartItem, "id"> & { id?: string }) => {
+  const addItem = (
+    itemToAdd: Omit<CartItem, "id"> & { id?: string },
+    options?: { openDrawer?: boolean }
+  ) => {
     const itemKey =
       itemToAdd.id ||
-      `${itemToAdd.productId}-${itemToAdd.variantName || "standard"}-${itemToAdd.isPreorder ? "pre" : "reg"}`;
+      `${itemToAdd.productId}-${itemToAdd.variantName || "standard"}`;
+
+    const completeItem: CartItem = {
+      ...itemToAdd,
+      id: itemKey,
+    };
 
     setItems((prev) => {
       const existingIndex = prev.findIndex((i) => i.id === itemKey);
       if (existingIndex > -1) {
         const updated = [...prev];
-        updated[existingIndex].quantity += itemToAdd.quantity;
+        const newQty = updated[existingIndex].quantity + itemToAdd.quantity;
+        const availableStock = updated[existingIndex].stock ?? itemToAdd.stock ?? 10;
+        const shouldBePreorder =
+          availableStock <= 0 || newQty > availableStock || itemToAdd.isPreorder;
+
+        updated[existingIndex] = {
+          ...updated[existingIndex],
+          quantity: newQty,
+          stock: availableStock,
+          isPreorder: shouldBePreorder,
+        };
         return updated;
       }
-      return [...prev, { ...itemToAdd, id: itemKey }];
+      return [...prev, completeItem];
     });
 
-    setIsCartOpen(true);
+    setLastAddedItem(completeItem);
+
+    // Only open cart drawer if explicitly requested (e.g. from checkout CTA)
+    if (options?.openDrawer) {
+      setIsCartOpen(true);
+    }
+  };
+
+  const dismissToast = () => {
+    setLastAddedItem(null);
   };
 
   const removeItem = (id: string) => {
@@ -93,7 +128,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
+      prev.map((item) => {
+        if (item.id !== id) return item;
+        const availableStock = item.stock ?? 10;
+        const shouldBePreorder =
+          availableStock <= 0 || quantity > availableStock;
+
+        return {
+          ...item,
+          quantity,
+          isPreorder: shouldBePreorder,
+        };
+      })
     );
   };
 
@@ -125,6 +171,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         openCart: () => setIsCartOpen(true),
         closeCart: () => setIsCartOpen(false),
         toggleCart: () => setIsCartOpen((prev) => !prev),
+        lastAddedItem,
+        dismissToast,
       }}
     >
       {children}

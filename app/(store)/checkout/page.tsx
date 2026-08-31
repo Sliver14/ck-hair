@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/lib/cart-context";
 import { formatPrice } from "@/lib/formatters";
+import { HairLoader } from "@/components/ui/HairLoader";
 import {
   ShieldCheck,
   Clock,
@@ -12,15 +13,23 @@ import {
   Check,
   AlertCircle,
   ArrowRight,
+  MapPin,
+  Truck,
+  Store,
 } from "lucide-react";
 
 const NIGERIAN_STATES = [
   "Lagos", "Abuja FCT", "Rivers", "Oyo", "Ogun", "Delta", "Edo", "Enugu", "Anambra", "Akwa Ibom", "Imo", "Kaduna", "Kano", "Kwara", "Ondo", "Osun", "Abia", "Cross River", "Plateau", "Benue", "Bayelsa", "Ekiti", "Ebonyi", "Bauchi", "Gombe", "Adamawa", "Borno", "Jigawa", "Katsina", "Kebbi", "Kogi", "Nasarawa", "Niger", "Sokoto", "Taraba", "Yobe", "Zamfara"
 ];
 
+const STUDIO_ADDRESS = "Admiralty Way, Lekki Phase 1, Lagos, Nigeria";
+
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, subtotal, hasPreorderItems, clearCart } = useCart();
+
+  // Fulfillment method: 'pickup' is default, 'delivery' is optional
+  const [fulfillmentMethod, setFulfillmentMethod] = useState<"pickup" | "delivery">("pickup");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -38,7 +47,13 @@ export default function CheckoutPage() {
   const [errorMsg, setErrorMsg] = useState("");
 
   const FREE_SHIPPING_THRESHOLD = 500000;
-  const deliveryFee = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 5000;
+  const deliveryFee =
+    fulfillmentMethod === "pickup"
+      ? 0
+      : subtotal >= FREE_SHIPPING_THRESHOLD
+      ? 0
+      : 5000;
+
   const total = subtotal + deliveryFee;
 
   useEffect(() => {
@@ -66,23 +81,43 @@ export default function CheckoutPage() {
       return;
     }
 
-    if (!formData.name || !formData.email || !formData.phone || !formData.address || !formData.city) {
-      setErrorMsg("Please complete all required contact and delivery fields.");
+    if (!formData.name || !formData.email || !formData.phone) {
+      setErrorMsg("Please complete all required contact details.");
+      return;
+    }
+
+    if (fulfillmentMethod === "delivery" && (!formData.address || !formData.city)) {
+      setErrorMsg("Please provide your complete delivery street address and city.");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
+      const finalAddress =
+        fulfillmentMethod === "pickup"
+          ? `Store Pickup: ${STUDIO_ADDRESS}`
+          : formData.address;
+
+      const finalCity =
+        fulfillmentMethod === "pickup" ? "Lekki" : formData.city;
+
+      const finalState =
+        fulfillmentMethod === "pickup" ? "Lagos" : formData.state;
+
+      const customerNotesWithMethod = formData.notes
+        ? `[${fulfillmentMethod === "pickup" ? "Studio Pickup" : "Nationwide Delivery"}] ${formData.notes}`
+        : `[${fulfillmentMethod === "pickup" ? "Studio Pickup" : "Nationwide Delivery"}]`;
+
       const payload = {
         customerName: formData.name,
         customerEmail: formData.email,
         customerPhone: formData.phone,
         customerWhatsapp: formData.whatsapp || formData.phone,
-        deliveryAddress: formData.address,
-        city: formData.city,
-        state: formData.state,
-        customerNotes: formData.notes,
+        deliveryAddress: finalAddress,
+        city: finalCity,
+        state: finalState,
+        customerNotes: customerNotesWithMethod,
         subtotal,
         deliveryFee,
         total,
@@ -122,27 +157,31 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="py-24 text-center text-brand-muted bg-[#FAFAF8]">
-        <p>Loading checkout...</p>
+      <div className="py-32 flex items-center justify-center bg-[#FAF6F2] min-h-[60vh]">
+        <HairLoader
+          size="md"
+          text="PREPARING CHECKOUT"
+          subtext="Validating your selected pieces..."
+        />
       </div>
     );
   }
 
   return (
-    <div className="py-12 md:py-20 bg-[#FAFAF8] min-h-screen">
+    <div className="py-12 md:py-20 bg-[#FAF6F2] min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-brand-gold font-bold">
+          <div className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] text-[#B76E79] font-bold">
             <Lock className="w-3.5 h-3.5" />
             <span>Secure Checkout</span>
           </div>
           <h1 className="font-serif-luxury text-3xl md:text-5xl font-bold text-brand-dark">
-            DELIVERY & PAYMENT
+            FULFILLMENT & PAYMENT
           </h1>
           <p className="text-xs md:text-sm text-brand-muted font-light">
-            Enter your details to generate your official CK Hair order and GTBank transfer instructions.
+            Choose pickup or delivery, enter your details, and generate your official CK Hair order and GTBank transfer instructions.
           </p>
         </div>
 
@@ -176,7 +215,7 @@ export default function CheckoutPage() {
                     placeholder="e.g. Amaka Eze"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
+                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
                   />
                 </div>
 
@@ -191,7 +230,7 @@ export default function CheckoutPage() {
                     placeholder="amaka@example.com"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
+                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
                   />
                 </div>
 
@@ -206,7 +245,7 @@ export default function CheckoutPage() {
                     placeholder="08012345678"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
+                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
                   />
                 </div>
 
@@ -220,98 +259,214 @@ export default function CheckoutPage() {
                     placeholder="Same as phone or enter separate WhatsApp line"
                     value={formData.whatsapp}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
+                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
                   />
                 </div>
               </div>
             </div>
 
-            {/* 2. Delivery Information */}
+            {/* 2. Fulfillment Method (Pickup Default vs Optional Delivery) */}
             <div className="bg-white p-6 sm:p-8 rounded-2xl border border-brand-border/60 shadow-xs space-y-6">
-              <h2 className="font-serif-luxury text-xl font-bold text-brand-dark border-b border-brand-border/60 pb-3">
-                2. NATIONWIDE DELIVERY ADDRESS
-              </h2>
+              <div className="flex items-center justify-between border-b border-brand-border/60 pb-3">
+                <h2 className="font-serif-luxury text-xl font-bold text-brand-dark">
+                  2. FULFILLMENT METHOD
+                </h2>
+                <span className="text-[11px] text-brand-gold font-bold uppercase tracking-wider">
+                  Pickup (Default) or Delivery
+                </span>
+              </div>
 
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                    Street Address / House or Office Number *
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    required
-                    placeholder="e.g. 15 Admiralty Way, Lekki Phase 1"
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
-                  />
+              {/* Selection cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Option 1: Store Pickup (Default) */}
+                <div
+                  onClick={() => setFulfillmentMethod("pickup")}
+                  className={`p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between ${
+                    fulfillmentMethod === "pickup"
+                      ? "border-brand-dark bg-[#FAF9F5] shadow-xs"
+                      : "border-brand-border hover:border-brand-border/80 bg-white"
+                  }`}
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Store className="w-4 h-4 text-brand-dark" />
+                        <span className="text-xs font-bold uppercase tracking-wider text-brand-dark">
+                          Store Pickup
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-green-100 text-green-800">
+                        Default • Free
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-brand-muted font-light leading-relaxed">
+                      Collect directly from our luxury studio in Lekki Phase 1, Lagos.
+                    </p>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-brand-border/40 flex items-center justify-between text-xs">
+                    <span className="text-brand-muted">Cost</span>
+                    <span className="font-bold text-brand-dark">₦0 (FREE)</span>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
+                {/* Option 2: Nationwide Delivery (Optional) */}
+                <div
+                  onClick={() => setFulfillmentMethod("delivery")}
+                  className={`p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between ${
+                    fulfillmentMethod === "delivery"
+                      ? "border-brand-dark bg-[#FAF9F5] shadow-xs"
+                      : "border-brand-border hover:border-brand-border/80 bg-white"
+                  }`}
+                >
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Truck className="w-4 h-4 text-brand-dark" />
+                        <span className="text-xs font-bold uppercase tracking-wider text-brand-dark">
+                          Nationwide Delivery
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-sand text-brand-dark">
+                        Optional
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-brand-muted font-light leading-relaxed">
+                      Fast, insured delivery to your doorstep anywhere in Nigeria.
+                    </p>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-brand-border/40 flex items-center justify-between text-xs">
+                    <span className="text-brand-muted">Cost</span>
+                    <span className="font-bold text-brand-dark">
+                      {subtotal >= FREE_SHIPPING_THRESHOLD
+                        ? "FREE (Above ₦500k)"
+                        : "₦5,000 Flat Rate"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Conditional Content based on Fulfillment Selection */}
+              {fulfillmentMethod === "pickup" ? (
+                /* Studio Pickup Details Card */
+                <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-brand-border/60 space-y-3">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
+                    <div className="space-y-1">
+                      <h3 className="text-xs font-bold uppercase tracking-wider text-brand-dark">
+                        Pickup Location & Collection Hours
+                      </h3>
+                      <p className="text-xs font-medium text-brand-dark">
+                        {STUDIO_ADDRESS}
+                      </p>
+                      <p className="text-[11px] text-brand-muted">
+                        Operating Hours: Monday – Saturday (9:00 AM – 6:00 PM)
+                      </p>
+                      <p className="text-[11px] text-brand-muted font-light pt-1">
+                        We will notify you via WhatsApp as soon as your luxury hair piece is packaged and ready for collection.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-brand-border/40 space-y-1.5">
                     <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                      City / Area *
+                      Pickup Notes or Authorized Representative (Optional)
                     </label>
                     <input
                       type="text"
-                      name="city"
-                      required
-                      placeholder="e.g. Lekki / Victoria Island"
-                      value={formData.city}
+                      name="notes"
+                      placeholder="e.g. Will pick up on Saturday or sending dispatch rider"
+                      value={formData.notes}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
+                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-white"
                     />
+                  </div>
+                </div>
+              ) : (
+                /* Delivery Address Form */
+                <div className="space-y-4 pt-2">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                      Street Address / House or Office Number *
+                    </label>
+                    <input
+                      type="text"
+                      name="address"
+                      required={fulfillmentMethod === "delivery"}
+                      placeholder="e.g. 15 Admiralty Way, Lekki Phase 1"
+                      value={formData.address}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                        City / Area *
+                      </label>
+                      <input
+                        type="text"
+                        name="city"
+                        required={fulfillmentMethod === "delivery"}
+                        placeholder="e.g. Lekki / Victoria Island / Ikeja"
+                        value={formData.city}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                        State *
+                      </label>
+                      <select
+                        name="state"
+                        value={formData.state}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5] cursor-pointer"
+                      >
+                        {NIGERIAN_STATES.map((st) => (
+                          <option key={st} value={st}>
+                            {st}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                      State *
+                      Special Delivery Instructions or Landmark
                     </label>
-                    <select
-                      name="state"
-                      value={formData.state}
+                    <textarea
+                      name="notes"
+                      rows={2}
+                      placeholder="e.g. Close to the junction, please call before arriving."
+                      value={formData.notes}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8] cursor-pointer"
-                    >
-                      {NIGERIAN_STATES.map((st) => (
-                        <option key={st} value={st}>
-                          {st}
-                        </option>
-                      ))}
-                    </select>
+                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
+                    />
                   </div>
                 </div>
+              )}
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                    Special Delivery Instructions or Notes
-                  </label>
-                  <textarea
-                    name="notes"
-                    rows={2}
-                    placeholder="e.g. Please call before arriving or deliver to reception."
-                    value={formData.notes}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
-                  />
-                </div>
-              </div>
             </div>
 
             {/* 3. Pre-order Terms Acknowledgment */}
             {hasPreorderItems && (
-              <div className="p-6 rounded-2xl bg-[#FAF6E8] border border-[#E9DCB5] space-y-4">
-                <div className="flex items-center gap-2 text-[#7A5B1E]">
-                  <Clock className="w-5 h-5 text-brand-gold flex-shrink-0" />
+              <div className="p-6 rounded-2xl bg-[#EAD7C3]/30 border border-[#EAD7C3] space-y-4">
+                <div className="flex items-center gap-2 text-[#2B2118]">
+                  <Clock className="w-5 h-5 text-[#B76E79] flex-shrink-0" />
                   <h3 className="text-xs font-bold uppercase tracking-wider">
                     Pre-Order Fulfillment Agreement
                   </h3>
                 </div>
-                <p className="text-xs text-[#5C4518] leading-relaxed font-light">
+                <p className="text-xs text-[#756558] leading-relaxed font-light">
                   Please note: This order contains custom pre-order item(s). Handcrafting and quality inspection require the estimated fulfillment period stated on the product page.
                 </p>
-                <label className="flex items-start gap-3 cursor-pointer pt-2 border-t border-[#E9DCB5]">
+                <label className="flex items-start gap-3 cursor-pointer pt-2 border-t border-[#EAD7C3]">
                   <input
                     type="checkbox"
                     checked={preorderAcknowledged}
@@ -319,7 +474,7 @@ export default function CheckoutPage() {
                     required
                     className="mt-1 w-4 h-4 accent-brand-dark"
                   />
-                  <span className="text-xs font-medium text-[#4D3A13]">
+                  <span className="text-xs font-medium text-[#2B2118]">
                     I understand that this is a pre-order and fulfillment will follow the estimated artisan schedule.
                   </span>
                 </label>
@@ -367,12 +522,25 @@ export default function CheckoutPage() {
                   <span>Subtotal</span>
                   <span className="font-medium text-brand-dark">{formatPrice(subtotal)}</span>
                 </div>
+
                 <div className="flex justify-between text-brand-muted">
-                  <span>Delivery Fee</span>
+                  <span>Fulfillment Method</span>
                   <span className="font-medium text-brand-dark">
-                    {deliveryFee === 0 ? "FREE (Complimentary)" : formatPrice(deliveryFee)}
+                    {fulfillmentMethod === "pickup" ? "Store Pickup (Default)" : "Nationwide Delivery"}
                   </span>
                 </div>
+
+                <div className="flex justify-between text-brand-muted">
+                  <span>Fulfillment Fee</span>
+                  <span className="font-medium text-brand-dark">
+                    {fulfillmentMethod === "pickup"
+                      ? "FREE (Complimentary Pickup)"
+                      : deliveryFee === 0
+                      ? "FREE (Complimentary)"
+                      : formatPrice(deliveryFee)}
+                  </span>
+                </div>
+
                 <div className="flex justify-between text-sm font-bold text-brand-dark pt-2 border-t border-brand-border/60">
                   <span>Total to Pay</span>
                   <span className="font-serif-luxury text-xl">{formatPrice(total)}</span>
@@ -381,9 +549,9 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment Method Notice */}
-            <div className="bg-[#FAF9F5] p-6 rounded-2xl border border-brand-border/60 space-y-3 text-xs">
+            <div className="bg-[#FAF6F2] p-6 rounded-2xl border border-brand-border space-y-3 text-xs">
               <div className="flex items-center gap-2 font-bold uppercase tracking-wider text-brand-dark">
-                <Building className="w-4 h-4 text-brand-gold" />
+                <Building className="w-4 h-4 text-[#B76E79]" />
                 <span>Payment via Direct Bank Transfer</span>
               </div>
               <p className="text-brand-muted font-light leading-relaxed text-[11px]">
@@ -395,7 +563,7 @@ export default function CheckoutPage() {
             <button
               type="submit"
               disabled={isSubmitting || (hasPreorderItems && !preorderAcknowledged)}
-              className="w-full py-4 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-black transition-all shadow-lg active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-4 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-2 hover:bg-[#3E3025] transition-all shadow-lg active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <span>Generating Order...</span>
@@ -414,3 +582,4 @@ export default function CheckoutPage() {
     </div>
   );
 }
+

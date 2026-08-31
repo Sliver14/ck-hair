@@ -51,11 +51,12 @@ export function ShopCatalog({
     return initialProducts
       .filter((product) => {
         // Category
-        if (
-          selectedCategory !== "all" &&
-          product.category?.slug !== selectedCategory
-        ) {
-          return false;
+        if (selectedCategory !== "all") {
+          const matchesCategory =
+            product.category?.slug === selectedCategory ||
+            product.category?.parent?.slug === selectedCategory ||
+            product.category?.parentId === selectedCategory;
+          if (!matchesCategory) return false;
         }
         // Texture
         if (

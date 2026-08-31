@@ -15,7 +15,10 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
       where: { id: params.id },
       include: { images: true, variants: true, category: true },
     }),
-    prisma.category.findMany({ orderBy: { order: "asc" } }),
+    prisma.category.findMany({
+      orderBy: { order: "asc" },
+      include: { parent: true },
+    }),
   ]);
 
   if (!product) {

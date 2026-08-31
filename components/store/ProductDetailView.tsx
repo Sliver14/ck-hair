@@ -34,7 +34,20 @@ export function ProductDetailView({
   const [activeAccordion, setActiveAccordion] = useState<string | null>("details");
   const [isAddedSuccess, setIsAddedSuccess] = useState(false);
 
-  // Parse lengths and colors
+  // Parse formats, lengths and colors
+  const parsedFormats: string[] = useMemo(() => {
+    try {
+      if (!product.formats) return [];
+      return typeof product.formats === "string"
+        ? JSON.parse(product.formats)
+        : Array.isArray(product.formats)
+        ? product.formats
+        : [];
+    } catch {
+      return [];
+    }
+  }, [product.formats]);
+
   const parsedLengths: string[] = useMemo(() => {
     try {
       return product.lengths ? JSON.parse(product.lengths) : [];
@@ -51,6 +64,9 @@ export function ProductDetailView({
     }
   }, [product.colors]);
 
+  const [selectedFormat, setSelectedFormat] = useState<string>(
+    parsedFormats[0] || ""
+  );
   const [selectedLength, setSelectedLength] = useState<string>(
     parsedLengths[0] || '20"'
   );
@@ -66,9 +82,12 @@ export function ProductDetailView({
 
   const currentPrice = currentVariant ? currentVariant.price : product.price;
 
-  const isPreorder =
-    product.availability === "PREORDER" || product.preorderEnabled;
+  const availableStock = product.stock || 0;
   const isOutOfStock = product.availability === "OUT_OF_STOCK";
+  const isZeroStock = availableStock <= 0;
+  const isExceedingStock = !isZeroStock && quantity > availableStock;
+  const isPreorder =
+    product.availability === "PREORDER" || isZeroStock || isExceedingStock;
 
   const images = product.images && product.images.length > 0
     ? product.images
@@ -82,18 +101,28 @@ export function ProductDetailView({
   const handleAddToCart = () => {
     if (isOutOfStock) return;
 
+    const variantLabel = [
+      selectedFormat,
+      selectedLength,
+      selectedColor,
+    ]
+      .filter(Boolean)
+      .join(" / ");
+
     addItem({
       productId: product.id,
       name: product.name,
       slug: product.slug,
       price: currentPrice,
       image: images[0].url,
-      variantName: `${selectedLength} / ${selectedColor}`,
+      variantName: variantLabel,
+      format: selectedFormat || null,
       length: selectedLength,
       color: selectedColor,
       texture: product.texture,
       quantity,
-      isPreorder: !!isPreorder,
+      stock: availableStock,
+      isPreorder: Boolean(isPreorder),
       preorderDuration: product.preorderDuration || "2–4 weeks",
     });
 
@@ -105,13 +134,13 @@ export function ProductDetailView({
     /[^0-9]/g,
     ""
   )}?text=${encodeURIComponent(
-    `Hello CK Hair, I am interested in: ${product.name} (${selectedLength}, ${selectedColor}) - ${formatPrice(
+    `Hello CK Hair, I am interested in: ${product.name} (${[selectedFormat, selectedLength, selectedColor].filter(Boolean).join(", ")}) - ${formatPrice(
       currentPrice
     )}.`
   )}`;
 
   return (
-    <div className="py-8 md:py-16 bg-[#FAFAF8]">
+    <div className="py-8 md:py-16 bg-[#FAF6F2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Product Grid */}
@@ -128,9 +157,14 @@ export function ProductDetailView({
 
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2">
-                {isPreorder && (
-                  <span className="bg-[#111111] text-white text-[10px] uppercase tracking-[0.2em] px-3.5 py-1.5 rounded-full font-bold shadow-md">
-                    Pre-Order
+                {isPreorder ? (
+                  <span className="bg-[#2B2118] text-white text-[10px] uppercase tracking-[0.2em] px-3.5 py-1.5 rounded-full font-bold shadow-md flex items-center gap-1.5">
+                    <Clock className="w-3 h-3 text-[#B76E79]" />
+                    <span>{isExceedingStock ? "Pre-Order (> Stock)" : "Artisan Pre-Order"}</span>
+                  </span>
+                ) : (
+                  <span className="bg-[#2B2118] text-[#FAF6F2] text-[10px] uppercase tracking-[0.2em] px-3.5 py-1.5 rounded-full font-bold shadow-md border border-[#EAD7C3]">
+                    In Stock ({availableStock} pcs)
                   </span>
                 )}
                 {product.bestseller && (
@@ -143,12 +177,12 @@ export function ProductDetailView({
 
             {/* Thumbnails */}
             {images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-2">
+              <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
                 {images.map((img: any, idx: number) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImageIndex(idx)}
-                    className={`w-20 h-24 rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all ${
+                    className={`w-16 h-20 sm:w-20 sm:h-24 rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all ${
                       selectedImageIndex === idx
                         ? "border-brand-dark shadow-md"
                         : "border-transparent opacity-60 hover:opacity-100"
@@ -169,19 +203,19 @@ export function ProductDetailView({
           <div className="lg:col-span-5 space-y-6">
             <div>
               {product.category && (
-                <p className="text-[11px] uppercase tracking-[0.25em] text-brand-gold font-bold mb-1.5">
-                  {product.category.name}
+                <p className="text-[11px] uppercase tracking-[0.25em] text-[#B76E79] font-bold mb-1.5">
+                  {product.category.parent ? `${product.category.parent.name} • ${product.category.name}` : product.category.name}
                 </p>
               )}
-              <h1 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark tracking-tight">
+              <h1 className="font-serif-luxury text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark tracking-tight break-words">
                 {product.name}
               </h1>
 
               {/* Reviews */}
               <div className="flex items-center gap-2 mt-2">
-                <div className="flex items-center text-brand-gold">
+                <div className="flex items-center text-[#B76E79]">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-brand-gold" />
+                    <Star key={i} className="w-4 h-4 fill-[#B76E79]" />
                   ))}
                 </div>
                 <span className="text-xs text-brand-muted font-medium">5.0 (Client Favorite)</span>
@@ -200,26 +234,73 @@ export function ProductDetailView({
               </div>
             </div>
 
-            {/* Preorder Explanatory Box */}
-            {isPreorder ? (
-              <div className="p-4 rounded-xl bg-[#FAF6E8] border border-[#E9DCB5] space-y-2">
-                <div className="flex items-center gap-2 text-[#7E5E1A]">
-                  <Clock className="w-4 h-4 text-brand-gold" />
-                  <span className="text-xs font-bold uppercase tracking-wider">
-                    Available for Pre-Order
+            {/* Stock / Preorder Explanatory Box */}
+            {isExceedingStock ? (
+              <div className="p-4 rounded-2xl bg-[#FAF6E8] border border-[#E9DCB5] space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[#7E5E1A]">
+                    <Clock className="w-4 h-4 text-brand-gold" />
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      Pre-Order Notice (Quantity Exceeds Stock)
+                    </span>
+                  </div>
+                  <span className="text-[10px] uppercase font-bold text-[#8A6820] bg-white/80 px-2 py-0.5 rounded-full">
+                    {availableStock} in ready stock
+                  </span>
+                </div>
+                <p className="text-xs text-[#5D4919] font-medium">
+                  You selected <span className="font-bold">{quantity} pieces</span>. We have <span className="font-bold">{availableStock} pieces</span> in ready stock.
+                </p>
+                <p className="text-[11px] text-[#7A642B] font-light leading-relaxed">
+                  The additional pieces will be specially handcrafted for you. Estimated artisan fulfillment: <span className="font-bold">{product.preorderDuration || "2–4 weeks"}</span>.
+                </p>
+              </div>
+            ) : isZeroStock || product.availability === "PREORDER" ? (
+              <div className="p-4 rounded-2xl bg-[#FAF6E8] border border-[#E9DCB5] space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[#7E5E1A]">
+                    <Clock className="w-4 h-4 text-brand-gold" />
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      Artisan Pre-Order
+                    </span>
+                  </div>
+                  <span className="text-[10px] uppercase font-bold text-[#8A6820] bg-white/70 px-2 py-0.5 rounded-full">
+                    Ready Stock Finished
                   </span>
                 </div>
                 <p className="text-xs text-[#5D4919] font-medium">
                   Estimated fulfillment: <span className="font-bold">{product.preorderDuration || "2–4 weeks"}</span>
                 </p>
                 <p className="text-[11px] text-[#7A642B] font-light leading-relaxed">
-                  This item is crafted in limited artisan batches. Your order will be prioritized and prepared immediately upon confirmation of bank transfer.
+                  Ready stock for this piece is currently allocated. Your unit will be handcrafted in our next artisan production batch upon bank transfer confirmation.
+                </p>
+              </div>
+            ) : availableStock <= 5 ? (
+              <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200 space-y-1">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-amber-900">
+                    <span className="text-sm">🔥</span>
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      Only {availableStock} {availableStock === 1 ? "Piece" : "Pieces"} Left in Stock!
+                    </span>
+                  </div>
+                  <span className="text-[10px] uppercase font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full">
+                    Fast Selling
+                  </span>
+                </div>
+                <p className="text-[11px] text-amber-800 font-light">
+                  Ready for immediate nationwide dispatch or pickup. If you select more than {availableStock} pieces, the order automatically switches to Pre-Order.
                 </p>
               </div>
             ) : (
-              <div className="flex items-center gap-2 text-green-800 text-xs font-semibold bg-green-50 border border-green-200 px-3 py-2 rounded-xl">
-                <ShieldCheck className="w-4 h-4 text-green-700" />
-                <span>In Stock & Ready for Immediate Nationwide Dispatch</span>
+              <div className="flex items-center justify-between text-green-800 text-xs font-semibold bg-green-50 border border-green-200 px-4 py-2.5 rounded-xl">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-green-700" />
+                  <span>In Stock & Ready for Immediate Dispatch</span>
+                </div>
+                <span className="text-[11px] font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded-full">
+                  {availableStock} pieces available
+                </span>
               </div>
             )}
 
@@ -232,6 +313,34 @@ export function ProductDetailView({
 
             {/* Variants Selector */}
             <div className="space-y-4 pt-2 border-t border-brand-border/60">
+              
+              {/* Formats (e.g. Braiding Hair vs Weft) */}
+              {parsedFormats.length > 0 && (
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs uppercase tracking-wider font-semibold text-brand-dark">
+                      Select Format: <span className="text-brand-gold font-bold">{selectedFormat}</span>
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {parsedFormats.map((fmt) => (
+                      <button
+                        key={fmt}
+                        type="button"
+                        onClick={() => setSelectedFormat(fmt)}
+                        className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                          selectedFormat === fmt
+                            ? "bg-brand-dark text-white shadow-sm"
+                            : "bg-white border border-brand-border text-brand-dark hover:border-brand-dark"
+                        }`}
+                      >
+                        {fmt}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Lengths */}
               {parsedLengths.length > 0 && (
                 <div>
@@ -244,6 +353,7 @@ export function ProductDetailView({
                     {parsedLengths.map((len) => (
                       <button
                         key={len}
+                        type="button"
                         onClick={() => setSelectedLength(len)}
                         className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
                           selectedLength === len
@@ -268,6 +378,7 @@ export function ProductDetailView({
                     {parsedColors.map((color) => (
                       <button
                         key={color}
+                        type="button"
                         onClick={() => setSelectedColor(color)}
                         className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
                           selectedColor === color
@@ -283,36 +394,39 @@ export function ProductDetailView({
               )}
 
               {/* Quantity Stepper & Add to Bag */}
-              <div className="pt-2 flex items-center gap-3">
-                <div className="flex items-center border border-brand-border rounded-full bg-white px-2 py-1">
+              <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="flex items-center justify-between sm:justify-start border border-brand-border rounded-full bg-white px-3 py-1.5 sm:py-1">
                   <button
+                    type="button"
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-8 h-8 flex items-center justify-center text-sm font-bold text-brand-dark hover:bg-brand-sand rounded-full"
+                    className="w-8 h-8 flex items-center justify-center text-sm font-bold text-brand-dark hover:bg-[#EAD7C3]/50 rounded-full transition-colors"
                   >
                     -
                   </button>
-                  <span className="w-8 text-center text-xs font-bold text-brand-dark">
+                  <span className="w-10 text-center text-xs font-bold text-brand-dark">
                     {quantity}
                   </span>
                   <button
+                    type="button"
                     onClick={() => setQuantity(quantity + 1)}
-                    className="w-8 h-8 flex items-center justify-center text-sm font-bold text-brand-dark hover:bg-brand-sand rounded-full"
+                    className="w-8 h-8 flex items-center justify-center text-sm font-bold text-brand-dark hover:bg-[#EAD7C3]/50 rounded-full transition-colors"
                   >
                     +
                   </button>
                 </div>
 
                 <button
+                  type="button"
                   onClick={handleAddToCart}
                   disabled={isOutOfStock}
-                  className={`flex-1 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.2em] flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 ${
+                  className={`flex-1 py-4 px-6 rounded-full text-xs font-semibold uppercase tracking-[0.18em] flex items-center justify-center gap-2 transition-all shadow-md active:scale-98 text-center ${
                     isOutOfStock
                       ? "bg-brand-sand text-brand-lightMuted cursor-not-allowed"
                       : isAddedSuccess
                       ? "bg-green-700 text-white"
                       : isPreorder
-                      ? "bg-brand-dark text-white hover:bg-black"
-                      : "bg-brand-dark text-white hover:bg-black"
+                      ? "bg-brand-dark text-white hover:bg-[#3E3025]"
+                      : "bg-brand-dark text-white hover:bg-[#3E3025]"
                   }`}
                 >
                   {isAddedSuccess ? (
@@ -324,13 +438,13 @@ export function ProductDetailView({
                     <span>Sold Out</span>
                   ) : isPreorder ? (
                     <>
-                      <Clock className="w-4 h-4 text-brand-gold" />
-                      <span>Pre-Order Now</span>
+                      <Clock className="w-4 h-4 text-[#B76E79]" />
+                      <span>Pre-Order ({quantity} {quantity === 1 ? "Piece" : "Pieces"})</span>
                     </>
                   ) : (
                     <>
                       <ShoppingBag className="w-4 h-4" />
-                      <span>Add to Bag</span>
+                      <span>Add to Bag ({quantity} {quantity === 1 ? "Piece" : "Pieces"})</span>
                     </>
                   )}
                 </button>

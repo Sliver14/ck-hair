@@ -36,6 +36,14 @@ export function generateOrderWhatsAppMessage(order: WhatsAppOrderPayload): strin
 
   const orderType = order.isPreorder ? "PRE-ORDER" : "REGULAR ORDER";
 
+  const isPickup =
+    order.deliveryAddress?.toLowerCase().includes("store pickup") ||
+    order.deliveryAddress?.toLowerCase().includes("pickup");
+
+  const fulfillmentLine = isPickup
+    ? `• Fulfillment: Store Pickup (Admiralty Way, Lekki Phase 1, Lagos)`
+    : `• Delivery Address: ${order.deliveryAddress}, ${order.city}, ${order.state}`;
+
   return `Hello CK Hair,
 
 I have placed an order on your website.
@@ -51,7 +59,7 @@ ${itemsText}
 *Customer Details:*
 • Name: ${order.customerName}
 • Phone: ${order.customerPhone}
-• Delivery Address: ${order.deliveryAddress}, ${order.city}, ${order.state}
+${fulfillmentLine}
 
 I have made my bank transfer payment and I am sending this to confirm my order.
 

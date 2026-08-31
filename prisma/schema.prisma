@@ -33,16 +33,19 @@ model Customer {
 }
 
 model Category {
-  id          String    @id @default(uuid())
-  name        String    @unique
-  slug        String    @unique
+  id          String     @id @default(uuid())
+  name        String     @unique
+  slug        String     @unique
   description String?
   image       String?
-  featured    Boolean   @default(false)
-  order       Int       @default(0)
+  featured    Boolean    @default(false)
+  order       Int        @default(0)
+  parentId    String?
+  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryHierarchy")
   products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Product {
@@ -61,8 +64,9 @@ model Product {
   stock               Int              @default(10)
   status              String           @default("ACTIVE") // ACTIVE, DRAFT, DISABLED
   availability        String           @default("IN_STOCK") // IN_STOCK, PREORDER, OUT_OF_STOCK
-  hairType            String?          // Virgin Hair, Raw Hair, Human Hair
+  hairType            String?          // Virgin Hair, Raw Hair, Human Hair, Blend/Premium Fiber
   texture             String?          // Body Wave, Bone Straight, Deep Wave, Kinky Curly, etc.
+  formats             String?          // JSON array e.g. ["Braiding Hair", "Weft"]
   lengths             String?          // JSON array string e.g. ["14\"", "16\"", "18\""]
   colors              String?          // JSON array string e.g. ["Natural Black", "Jet Black"]
   featured            Boolean          @default(false)

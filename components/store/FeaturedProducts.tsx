@@ -30,10 +30,10 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
   });
 
   return (
-    <section className="py-16 md:py-24 bg-white border-b border-brand-border/60">
+    <section className="py-16 md:py-24 bg-[#FAF6F2] border-b border-brand-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-brand-gold font-bold block">
+          <span className="text-[11px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block">
             Most Loved Hair
           </span>
           <h2 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark">
@@ -45,15 +45,15 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center justify-center flex-wrap gap-2 md:gap-3 mb-12">
+        <div className="flex items-center justify-start sm:justify-center overflow-x-auto no-scrollbar gap-2 md:gap-3 mb-8 md:mb-12 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.15em] transition-all ${
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-[0.15em] whitespace-nowrap flex-shrink-0 transition-all ${
                 activeTab === tab.id
                   ? "bg-brand-dark text-white shadow-sm"
-                  : "bg-brand-sand/70 text-brand-muted hover:text-brand-dark hover:bg-brand-sand"
+                  : "bg-[#EAD7C3]/50 text-brand-muted hover:text-brand-dark hover:bg-[#EAD7C3]"
               }`}
             >
               {tab.label}

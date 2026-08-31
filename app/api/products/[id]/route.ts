@@ -42,6 +42,7 @@ export async function PUT(
       availability,
       hairType,
       texture,
+      formats,
       lengths,
       colors,
       featured,
@@ -63,11 +64,26 @@ export async function PUT(
       updateData.compareAtPrice = compareAtPrice ? parseFloat(compareAtPrice) : null;
     if (sku !== undefined) updateData.sku = sku;
     if (categoryId !== undefined) updateData.categoryId = categoryId;
-    if (stock !== undefined) updateData.stock = parseInt(stock);
-    if (status !== undefined) updateData.status = status;
-    if (availability !== undefined) updateData.availability = availability;
+    if (stock !== undefined) {
+      const parsedStock = parseInt(stock);
+      updateData.stock = Math.max(0, isNaN(parsedStock) ? 0 : parsedStock);
+      if (availability !== undefined) {
+        updateData.availability = availability;
+      } else {
+        if (updateData.stock > 0) {
+          updateData.availability = "IN_STOCK";
+        } else {
+          updateData.availability = "PREORDER";
+          updateData.preorderEnabled = true;
+        }
+      }
+    } else if (availability !== undefined) {
+      updateData.availability = availability;
+    }
     if (hairType !== undefined) updateData.hairType = hairType;
     if (texture !== undefined) updateData.texture = texture;
+    if (formats !== undefined)
+      updateData.formats = typeof formats === "string" ? formats : JSON.stringify(formats);
     if (lengths !== undefined)
       updateData.lengths = typeof lengths === "string" ? lengths : JSON.stringify(lengths);
     if (colors !== undefined)

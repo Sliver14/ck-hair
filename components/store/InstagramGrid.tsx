@@ -16,10 +16,10 @@ export function InstagramGrid({ instagramUrl = "https://instagram.com/CK_Hair.Ng
   ];
 
   return (
-    <section className="py-16 md:py-24 bg-[#FAFAF8] border-b border-brand-border/60">
+    <section className="py-16 md:py-24 bg-[#FAF6F2] border-b border-brand-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-brand-gold font-bold block">
+          <span className="text-[11px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block">
             Social Inspiration
           </span>
           <h2 className="font-serif-luxury text-3xl md:text-4xl font-bold text-brand-dark uppercase">

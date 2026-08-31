@@ -43,12 +43,12 @@ export default function TrackOrderPage() {
   }, [initialOrderNumber]);
 
   return (
-    <div className="py-12 md:py-20 bg-[#FAFAF8] min-h-screen">
+    <div className="py-12 md:py-20 bg-[#FAF6F2] min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="text-[11px] uppercase tracking-[0.25em] text-brand-gold font-bold block">
+          <span className="text-[11px] uppercase tracking-[0.25em] text-[#B76E79] font-bold block">
             Real-Time Concierge
           </span>
           <h1 className="font-serif-luxury text-3xl md:text-5xl font-bold text-brand-dark">
@@ -73,12 +73,12 @@ export default function TrackOrderPage() {
               placeholder="e.g. CKH-20260831-001"
               value={orderNumber}
               onChange={(e) => setOrderNumber(e.target.value)}
-              className="flex-1 px-5 py-3.5 rounded-full border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8] uppercase font-mono font-semibold"
+              className="flex-1 px-5 py-3.5 rounded-full border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5] uppercase font-mono font-semibold"
             />
             <button
               type="submit"
               disabled={isLoading}
-              className="px-8 py-3.5 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-[0.18em] hover:bg-black transition-all flex items-center justify-center gap-2 flex-shrink-0"
+              className="px-8 py-3.5 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-[0.18em] hover:bg-[#3E3025] transition-all flex items-center justify-center gap-2 flex-shrink-0"
             >
               <Search className="w-3.5 h-3.5" />
               <span>{isLoading ? "Tracking..." : "Track"}</span>

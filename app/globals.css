@@ -11,13 +11,14 @@
   }
 
   body {
-    @apply bg-[#FAFAF8] text-[#121212] antialiased selection:bg-[#121212] selection:text-white;
+    @apply bg-[#FAF6F2] text-[#2B2118] antialiased selection:bg-[#2B2118] selection:text-white;
     font-family: var(--font-inter);
   }
 
   h1, h2, h3, .font-serif-luxury {
     font-family: var(--font-cormorant);
     letter-spacing: -0.02em;
+    color: #2B2118;
   }
 }
 
@@ -27,14 +28,14 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #F4F4F0;
+  background: #FAF6F2;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C4C4BC;
+  background: #EAD7C3;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #888880;
+  background: #B76E79;
 }
 
 /* Luxury animations */
@@ -48,12 +49,84 @@
   to { transform: translateX(0); }
 }
 
+@keyframes hairWave {
+  0%, 100% {
+    transform: rotate(0deg) skewX(0deg);
+  }
+  25% {
+    transform: rotate(2deg) skewX(1.5deg);
+  }
+  75% {
+    transform: rotate(-2deg) skewX(-1.5deg);
+  }
+}
+
+@keyframes hairStrandFlow {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -200;
+  }
+}
+
+@keyframes hairShimmerGlow {
+  0%, 100% {
+    opacity: 0.4;
+    filter: drop-shadow(0 0 2px rgba(183, 110, 121, 0.3));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(183, 110, 121, 0.8));
+  }
+}
+
+@keyframes crownFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.03);
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-in-right {
   animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-hair-wave {
+  transform-origin: top center;
+  animation: hairWave 3.5s ease-in-out infinite;
+}
+
+.animate-hair-strand-1 {
+  stroke-dasharray: 120;
+  animation: hairStrandFlow 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-hair-strand-2 {
+  stroke-dasharray: 140;
+  animation: hairStrandFlow 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.4s;
+}
+
+.animate-hair-strand-3 {
+  stroke-dasharray: 160;
+  animation: hairStrandFlow 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite 0.8s;
+}
+
+.animate-crown {
+  animation: crownFloat 3s ease-in-out infinite;
+}
+
+.animate-hair-glow {
+  animation: hairShimmerGlow 2.5s ease-in-out infinite;
 }
 
 /* Editorial image hover */

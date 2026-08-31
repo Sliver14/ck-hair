@@ -22,8 +22,8 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center p-6 bg-[#FAFAF8]">
-        <div className="w-20 h-20 rounded-full bg-brand-sand flex items-center justify-center text-brand-muted mb-4">
+      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center p-6 bg-[#FAF6F2]">
+        <div className="w-20 h-20 rounded-full bg-[#EAD7C3]/50 flex items-center justify-center text-brand-muted mb-4">
           <ShoppingBag className="w-10 h-10 stroke-[1.2]" />
         </div>
         <h1 className="font-serif-luxury text-3xl md:text-4xl font-bold text-brand-dark mb-2">
@@ -34,7 +34,7 @@ export default function CartPage() {
         </p>
         <Link
           href="/shop"
-          className="px-8 py-4 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-md"
+          className="px-8 py-4 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-[0.2em] hover:bg-[#3E3025] transition-all shadow-md"
         >
           Explore Collection
         </Link>
@@ -43,11 +43,11 @@ export default function CartPage() {
   }
 
   return (
-    <div className="py-12 md:py-20 bg-[#FAFAF8] min-h-screen">
+    <div className="py-12 md:py-20 bg-[#FAF6F2] min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between pb-6 mb-8 border-b border-brand-border/60">
           <div>
-            <span className="text-[11px] uppercase tracking-[0.25em] text-brand-gold font-bold block mb-1">
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#B76E79] font-bold block mb-1">
               Order Review
             </span>
             <h1 className="font-serif-luxury text-3xl md:text-4xl font-bold text-brand-dark">
@@ -63,7 +63,7 @@ export default function CartPage() {
         </div>
 
         {/* Free Shipping Meter */}
-        <div className="p-4 rounded-xl bg-brand-sand/70 border border-brand-border/60 mb-8 max-w-4xl text-xs">
+        <div className="p-4 rounded-xl bg-[#EAD7C3]/40 border border-brand-border/60 mb-8 max-w-4xl text-xs">
           {freeShippingLeft > 0 ? (
             <p className="text-brand-charcoal mb-2 font-medium">
               Add <span className="font-bold text-brand-dark">{formatPrice(freeShippingLeft)}</span> more for <span className="font-bold">COMPLIMENTARY NATIONWIDE DELIVERY</span>.
@@ -76,7 +76,7 @@ export default function CartPage() {
           )}
           <div className="w-full bg-brand-border h-2 rounded-full overflow-hidden">
             <div
-              className="bg-brand-dark h-full transition-all duration-500 rounded-full"
+              className="bg-[#B76E79] h-full transition-all duration-500 rounded-full"
               style={{ width: `${freeShippingProgress}%` }}
             />
           </div>
@@ -84,10 +84,10 @@ export default function CartPage() {
 
         {/* Pre-order Alert */}
         {hasPreorderItems && (
-          <div className="p-4 rounded-xl bg-[#FAF6E8] border border-[#E9DCB5] mb-8 max-w-4xl flex items-start gap-3 text-xs text-[#6F5B23]">
-            <Clock className="w-5 h-5 flex-shrink-0 mt-0.5" />
+          <div className="p-4 rounded-xl bg-[#EAD7C3]/30 border border-[#EAD7C3] mb-8 max-w-4xl flex items-start gap-3 text-xs text-[#2B2118]">
+            <Clock className="w-5 h-5 text-[#B76E79] flex-shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold uppercase tracking-wider block">Notice Regarding Pre-Order Pieces</span>
+              <span className="font-bold uppercase tracking-wider block text-[#B76E79]">Notice Regarding Pre-Order Pieces</span>
               Your shopping bag contains bespoke pre-order pieces that are tailored to order. They will be prepared and delivered according to their stated timeline.
             </div>
           </div>

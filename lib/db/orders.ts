@@ -105,6 +105,32 @@ export async function createOrder(data: CreateOrderInput) {
     },
   });
 
+  // Automatically reduce stock pieces for ordered products
+  for (const item of data.items) {
+    if (item.productId) {
+      try {
+        const prod = await prisma.product.findUnique({
+          where: { id: item.productId },
+        });
+        if (prod) {
+          const newStock = Math.max(0, prod.stock - item.quantity);
+          const shouldSwitchToPreorder = newStock === 0;
+
+          await prisma.product.update({
+            where: { id: item.productId },
+            data: {
+              stock: newStock,
+              availability: shouldSwitchToPreorder ? "PREORDER" : prod.availability,
+              preorderEnabled: shouldSwitchToPreorder ? true : prod.preorderEnabled,
+            },
+          });
+        }
+      } catch (err) {
+        console.error("Error updating product stock for:", item.productId, err);
+      }
+    }
+  }
+
   return order;
 }
 

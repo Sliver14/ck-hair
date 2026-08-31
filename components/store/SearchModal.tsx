@@ -5,6 +5,8 @@ import { Search, X, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { formatPrice } from "@/lib/formatters";
 
+import { HairLoader } from "@/components/ui/HairLoader";
+
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -69,8 +71,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
         <div className="p-4 md:p-6 overflow-y-auto flex-1 divide-y divide-brand-sand">
           {isLoading ? (
-            <div className="py-12 text-center text-brand-muted text-sm tracking-widest uppercase">
-              Searching CK Hair Catalog...
+            <div className="py-12 flex items-center justify-center">
+              <HairLoader
+                size="sm"
+                text="SEARCHING ATELIER"
+                subtext="Finding matching luxury pieces..."
+              />
             </div>
           ) : results.length > 0 ? (
             <div className="space-y-3">

@@ -34,7 +34,7 @@ export function CartDrawer() {
         onClick={closeCart}
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-4 sm:pl-10">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col animate-slide-in-right">
           {/* Header */}
           <div className="p-5 md:p-6 border-b border-brand-border flex items-center justify-between bg-brand-sand/30">
@@ -66,7 +66,7 @@ export function CartDrawer() {
             )}
             <div className="w-full bg-brand-border h-1.5 rounded-full overflow-hidden">
               <div
-                className="bg-brand-dark h-full transition-all duration-500 rounded-full"
+                className="bg-[#B76E79] h-full transition-all duration-500 rounded-full"
                 style={{ width: `${freeShippingProgress}%` }}
               />
             </div>
@@ -74,10 +74,10 @@ export function CartDrawer() {
 
           {/* Pre-order Alert in Cart */}
           {hasPreorderItems && (
-            <div className="p-3.5 mx-4 mt-4 rounded-xl bg-[#FAF6E8] border border-[#E9DCB5] flex items-start gap-2.5 text-xs text-[#6F5B23]">
-              <Clock className="w-4 h-4 flex-shrink-0 mt-0.5" />
+            <div className="p-3.5 mx-4 mt-4 rounded-xl bg-[#EAD7C3]/30 border border-[#EAD7C3] flex items-start gap-2.5 text-xs text-[#2B2118]">
+              <Clock className="w-4 h-4 text-[#B76E79] flex-shrink-0 mt-0.5" />
               <div>
-                <span className="font-bold uppercase tracking-wider block">Pre-Order Notice</span>
+                <span className="font-bold uppercase tracking-wider block text-[#B76E79]">Pre-Order Notice</span>
                 Your bag includes custom pre-order item(s). Fulfillment timeline follows artisan preparation schedule.
               </div>
             </div>
@@ -87,7 +87,7 @@ export function CartDrawer() {
           <div className="flex-1 overflow-y-auto p-4 md:p-6 divide-y divide-brand-sand">
             {items.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center py-16 space-y-4">
-                <div className="w-16 h-16 rounded-full bg-brand-sand flex items-center justify-center text-brand-muted">
+                <div className="w-16 h-16 rounded-full bg-[#EAD7C3]/50 flex items-center justify-center text-brand-muted">
                   <ShoppingBag className="w-8 h-8 stroke-[1.2]" />
                 </div>
                 <div>
@@ -98,7 +98,7 @@ export function CartDrawer() {
                 </div>
                 <button
                   onClick={closeCart}
-                  className="mt-4 px-6 py-2.5 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-black transition-all"
+                  className="mt-4 px-6 py-2.5 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-widest hover:bg-[#3E3025] transition-all"
                 >
                   Start Shopping
                 </button>
@@ -106,7 +106,7 @@ export function CartDrawer() {
             ) : (
               items.map((item) => (
                 <div key={item.id} className="py-4 flex gap-4">
-                  <div className="w-20 h-24 rounded-lg bg-brand-sand overflow-hidden flex-shrink-0 relative">
+                  <div className="w-20 h-24 rounded-lg bg-[#EAD7C3]/40 overflow-hidden flex-shrink-0 relative">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -125,7 +125,7 @@ export function CartDrawer() {
                         <Link
                           href={`/product/${item.slug}`}
                           onClick={closeCart}
-                          className="text-sm font-semibold text-brand-dark hover:text-brand-gold transition-colors line-clamp-1"
+                          className="text-sm font-semibold text-brand-dark hover:text-[#B76E79] transition-colors line-clamp-1"
                         >
                           {item.name}
                         </Link>
@@ -144,14 +144,14 @@ export function CartDrawer() {
                       )}
 
                       {item.isPreorder && (
-                        <p className="text-[11px] text-[#A67C1E] mt-0.5 font-medium">
+                        <p className="text-[11px] text-[#B76E79] mt-0.5 font-medium">
                           Fulfillment: {item.preorderDuration || "2–4 weeks"}
                         </p>
                       )}
                     </div>
 
                     <div className="flex items-center justify-between mt-3">
-                      <div className="flex items-center border border-brand-border rounded-full bg-brand-sand/50">
+                      <div className="flex items-center border border-brand-border rounded-full bg-[#FAF6F2]">
                         <button
                           onClick={() => updateQuantity(item.id, item.quantity - 1)}
                           className="w-7 h-7 flex items-center justify-center text-xs font-bold text-brand-dark hover:bg-brand-sand rounded-l-full"
@@ -181,7 +181,7 @@ export function CartDrawer() {
 
           {/* Footer */}
           {items.length > 0 && (
-            <div className="p-5 md:p-6 border-t border-brand-border bg-[#FAF9F5] space-y-4">
+            <div className="p-5 md:p-6 border-t border-brand-border bg-[#FAF6F2] space-y-4">
               <div className="flex items-center justify-between text-base">
                 <span className="text-xs uppercase tracking-widest text-brand-muted font-medium">Subtotal</span>
                 <span className="font-serif-luxury text-xl font-bold text-brand-dark">{formatPrice(subtotal)}</span>
@@ -194,7 +194,7 @@ export function CartDrawer() {
                 <Link
                   href="/checkout"
                   onClick={closeCart}
-                  className="w-full py-3.5 bg-brand-dark text-white rounded-full font-medium text-xs uppercase tracking-[0.18em] flex items-center justify-center gap-2 hover:bg-black transition-all shadow-md active:scale-[0.99]"
+                  className="w-full py-3.5 bg-brand-dark text-white rounded-full font-medium text-xs uppercase tracking-[0.18em] flex items-center justify-center gap-2 hover:bg-[#3E3025] transition-all shadow-md active:scale-[0.99]"
                 >
                   <span>Proceed to Checkout</span>
                   <ArrowRight className="w-4 h-4" />

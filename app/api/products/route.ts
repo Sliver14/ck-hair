@@ -55,6 +55,7 @@ export async function POST(request: Request) {
       availability = "IN_STOCK",
       hairType,
       texture,
+      formats,
       lengths,
       colors,
       featured = false,
@@ -82,13 +83,21 @@ export async function POST(request: Request) {
         shortDescription,
         price: parseFloat(price),
         compareAtPrice: compareAtPrice ? parseFloat(compareAtPrice) : null,
-        sku: sku || `CK-${Date.now().toString().slice(-4)}`,
+        sku:
+          sku && sku.trim() !== ""
+            ? sku.trim()
+            : `CKH-${(name || "ITEM").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 4)}-${Math.floor(1000 + Math.random() * 9000)}`,
         categoryId,
         stock: parseInt(stock),
         status,
         availability,
         hairType,
         texture,
+        formats: formats
+          ? typeof formats === "string"
+            ? formats
+            : JSON.stringify(formats)
+          : null,
         lengths: typeof lengths === "string" ? lengths : JSON.stringify(lengths),
         colors: typeof colors === "string" ? colors : JSON.stringify(colors),
         featured: Boolean(featured),
