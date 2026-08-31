@@ -9,7 +9,14 @@ async function main() {
   // 1. Store Settings
   await prisma.storeSettings.upsert({
     where: { id: "default" },
-    update: {},
+    update: {
+      email: "ckhair.ng@gmail.com",
+      phone: "+234 902 655 5783",
+      whatsapp: "2349026555783",
+      instagram: "https://instagram.com/CK_Hair.Ng",
+      tiktok: "https://tiktok.com/@ck.hair0",
+      address: "Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
+    },
     create: {
       id: "default",
       storeName: "CK Hair",
