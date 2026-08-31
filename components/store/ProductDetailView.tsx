@@ -25,8 +25,8 @@ interface ProductDetailViewProps {
 
 export function ProductDetailView({
   product,
-  relatedProducts,
-  whatsappNumber = "2348012345678",
+  relatedProducts = [],
+  whatsappNumber = "2349026555783",
 }: ProductDetailViewProps) {
   const { addItem } = useCart();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);

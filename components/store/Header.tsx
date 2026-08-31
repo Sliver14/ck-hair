@@ -12,7 +12,7 @@ interface HeaderProps {
   whatsapp?: string;
 }
 
-export function Header({ storeName = "CK HAIR", whatsapp = "2348012345678" }: HeaderProps) {
+export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);

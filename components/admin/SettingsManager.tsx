@@ -158,7 +158,7 @@ export function SettingsManager({
                   type="text"
                   value={payment.whatsappNumber}
                   onChange={(e) => setPayment({ ...payment, whatsappNumber: e.target.value })}
-                  placeholder="2348012345678"
+                  placeholder="2349026555783"
                   className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
                 />
               </div>

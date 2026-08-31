@@ -59,8 +59,9 @@ Thank you!`;
 }
 
 export function generateWhatsAppUrl(phone?: string | null, text: string = ""): string {
-  const safePhone = (phone || "2348012345678").toString().replace(/[^0-9]/g, "");
+  const safePhone = (phone || "2349026555783").toString().replace(/[^0-9]/g, "");
   const encodedText = encodeURIComponent(text);
   return `https://wa.me/${safePhone}?text=${encodedText}`;
 }
+
 

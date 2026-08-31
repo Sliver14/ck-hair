@@ -9,7 +9,7 @@ interface StoreMaintenanceProps {
 
 export function StoreMaintenance({
   message = "CK Hair is currently preparing something beautiful. Please check back shortly.",
-  whatsapp = "2348012345678",
+  whatsapp = "2349026555783",
 }: StoreMaintenanceProps) {
   return (
     <div className="min-h-screen bg-[#111111] text-white flex flex-col justify-between p-6 md:p-12 relative overflow-hidden">

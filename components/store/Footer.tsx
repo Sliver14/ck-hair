@@ -149,10 +149,23 @@ export function Footer({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-[#1F1F1F] flex items-center justify-center text-[#ECECE8] hover:bg-white hover:text-brand-dark transition-all"
-                aria-label="Instagram"
+                aria-label="Instagram @CK_Hair.Ng"
+                title="Instagram @CK_Hair.Ng"
               >
                 <Instagram className="w-4 h-4" />
               </a>
+              {tiktok && (
+                <a
+                  href={tiktok}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-[#1F1F1F] flex items-center justify-center text-[#ECECE8] hover:bg-white hover:text-brand-dark transition-all text-xs font-bold font-mono"
+                  aria-label="TikTok @ck.hair0"
+                  title="TikTok @ck.hair0"
+                >
+                  TT
+                </a>
+              )}
               <a
                 href={facebook}
                 target="_blank"
