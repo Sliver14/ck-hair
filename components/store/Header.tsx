@@ -63,8 +63,8 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
             </button>
           </div>
 
-          {/* Logo */}
-          <div className="flex items-center">
+          {/* Logo (Hidden on mobile view) */}
+          <div className="hidden md:flex items-center">
             <Link
               href="/"
               className="group flex items-center gap-3"
