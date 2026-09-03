@@ -13,24 +13,24 @@ interface HeroProps {
 }
 
 export function Hero({
-  title = "LUXURY HAIR.\nEFFORTLESS CONFIDENCE.",
-  subtitle = "Premium raw human hair and signature blend fiber hair crafted for natural bounce, fluid movement, and timeless elegance.",
-  image = "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=1600&q=85",
-  primaryCtaText = "SHOP ALL HAIR",
+  title = "UNCOMPROMISED LUXURY.\nEFFORTLESS CONFIDENCE.",
+  subtitle = "Discover Nigeria's premier destination for couture Raw Human Hair, signature Anna Fiber Braiding & Wefts, and invisible HD Lace crafted for royalty.",
+  image = "/ck-hair/ck-hair-01.jpeg",
+  primaryCtaText = "EXPLORE COLLECTION",
   primaryCtaLink = "/shop",
-  secondaryCtaText = "PRE-ORDER",
+  secondaryCtaText = "PRE-ORDER EXCLUSIVES",
   secondaryCtaLink = "/preorder",
 }: HeroProps) {
   return (
     <section className="relative overflow-hidden bg-[#FAF6F2] border-b border-brand-border/60 min-h-[calc(100vh-105px)] lg:max-h-[calc(100vh-105px)] flex items-center py-8 sm:py-10 lg:py-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16 w-full">
-          
+
           {/* Left Column: Text & CTAs */}
           <div className="w-full lg:max-w-xl xl:max-w-2xl space-y-4 sm:space-y-5 text-center lg:text-left z-10 flex-1">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-brand-border text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-charcoal shadow-2xs">
               <Sparkles className="w-3 h-3 text-[#B76E79]" />
-              <span>Couture Wigs & Hair • Lagos</span>
+              <span>Lagos Luxury Hair • Nationwide Dispatch</span>
             </div>
 
             <h1 className="font-serif-luxury text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] xl:text-[3.75rem] font-bold tracking-tight text-brand-dark leading-[1.08] whitespace-pre-line">
@@ -61,16 +61,16 @@ export function Hero({
             {/* Micro proof badges */}
             <div className="pt-4 border-t border-brand-border/60 grid grid-cols-3 gap-4 text-center lg:text-left max-w-lg mx-auto lg:mx-0">
               <div>
-                <p className="font-serif-luxury text-base sm:text-lg md:text-xl font-bold text-brand-dark">100%</p>
-                <p className="text-[9px] uppercase tracking-wider text-brand-muted mt-0.5">Raw & Blend Hair</p>
+                <p className="font-serif-luxury text-base sm:text-lg md:text-xl font-bold text-brand-dark">100% Pure</p>
+                <p className="text-[9px] uppercase tracking-wider text-brand-muted mt-0.5">Raw & Anna Fiber</p>
               </div>
               <div>
-                <p className="font-serif-luxury text-base sm:text-lg md:text-xl font-bold text-brand-dark">HD Lace</p>
-                <p className="text-[9px] uppercase tracking-wider text-brand-muted mt-0.5">Skin Melt Tech</p>
+                <p className="font-serif-luxury text-base sm:text-lg md:text-xl font-bold text-brand-dark">HD Skin-Melt</p>
+                <p className="text-[9px] uppercase tracking-wider text-brand-muted mt-0.5">Invisible Knots</p>
               </div>
               <div>
-                <p className="font-serif-luxury text-base sm:text-lg md:text-xl font-bold text-brand-dark">Direct</p>
-                <p className="text-[9px] uppercase tracking-wider text-brand-muted mt-0.5">Bank & WhatsApp</p>
+                <p className="font-serif-luxury text-base sm:text-lg md:text-xl font-bold text-brand-dark">Nationwide</p>
+                <p className="text-[9px] uppercase tracking-wider text-brand-muted mt-0.5">Lagos • Abuja • Beyond</p>
               </div>
             </div>
           </div>
@@ -80,10 +80,10 @@ export function Hero({
             <div className="relative w-full max-w-md lg:max-w-lg xl:max-w-xl">
               {/* Decorative Frame */}
               <div className="absolute -inset-3.5 bg-gradient-to-tr from-[#EAD7C3] via-transparent to-[#FAF6F2] rounded-3xl -rotate-1 transform -z-10" />
-              
+
               <div className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] max-h-[min(540px,62vh)] rounded-2xl overflow-hidden shadow-2xl border border-white/80 bg-white">
                 <img
-                  src={image || "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=1600&q=85"}
+                  src={image || "/ck-hair/ck-hair-01.jpeg"}
                   alt="CK Hair Luxury Wig Model"
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
                 />

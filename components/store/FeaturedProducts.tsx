@@ -34,13 +34,13 @@ export function FeaturedProducts({ products }: FeaturedProductsProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
           <span className="text-[11px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block">
-            Most Loved Hair
+            Curated Signature Masterpieces
           </span>
           <h2 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark">
-            SHOP THE COLLECTION
+            FEATURED SIGNATURE HAIR
           </h2>
           <p className="text-xs md:text-sm text-brand-muted font-light">
-            Indulge in 100% pure human hair units and raw bundles engineered for long-lasting luxury and flawless blending.
+            Explore our most coveted Anna Fiber Braiding & Wefts, single-donor raw bundles, and skin-melt HD lace units.
           </p>
         </div>
 

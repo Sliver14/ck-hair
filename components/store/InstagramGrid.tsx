@@ -12,37 +12,37 @@ export function InstagramGrid({
 }: InstagramGridProps) {
   const posts = [
     {
-      img: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80",
+      img: "/ck-hair/ck-hair-12.jpeg",
       caption: "CK Signature Body Wave",
       link: instagramUrl,
       type: "instagram",
     },
     {
-      img: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=600&q=80",
+      img: "/ck-hair/ck-hair-13.jpeg",
       caption: "HD Lace Melt Installation",
       link: tiktokUrl,
       type: "tiktok",
     },
     {
-      img: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
+      img: "/ck-hair/ck-hair-14.jpeg",
       caption: "Bone Straight Raw Bundles",
       link: instagramUrl,
       type: "instagram",
     },
     {
-      img: "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=crop&w=600&q=80",
+      img: "/ck-hair/ck-hair-15.jpeg",
       caption: "Luxury Ready-to-Wear Glueless",
       link: tiktokUrl,
       type: "tiktok",
     },
     {
-      img: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=600&q=80",
+      img: "/ck-hair/ck-hair-16.jpeg",
       caption: "Deep Wave Salon Finish",
       link: instagramUrl,
       type: "instagram",
     },
     {
-      img: "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=600&q=80",
+      img: "/ck-hair/ck-hair-17.jpeg",
       caption: "Custom Color & Styling",
       link: instagramUrl,
       type: "instagram",

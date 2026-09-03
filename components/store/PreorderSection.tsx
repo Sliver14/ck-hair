@@ -20,13 +20,13 @@ export function PreorderSection({ preorderProducts }: PreorderSectionProps) {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#EAD7C3] text-[10px] uppercase tracking-[0.2em] font-semibold border border-white/10">
               <Clock className="w-3 h-3 text-[#B76E79]" />
-              <span>Limited Artisan Drops</span>
+              <span>Exclusive Pre-Order Drops</span>
             </div>
             <h2 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#FAF6F2]">
-              COMING SOON. WORTH THE WAIT.
+              SECURE RARE TEXTURES BEFORE PUBLIC RELEASE
             </h2>
             <p className="text-xs md:text-sm text-[#D8C7B8] max-w-xl font-light">
-              Secure rare single-donor hair textures and limited handcrafted custom units before public release.
+              Reserve our single-donor Raw Hair textures and custom-plucked HD lace units directly from our international artisan batches. Delivered on schedule.
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export function PreorderSection({ preorderProducts }: PreorderSectionProps) {
             href="/preorder"
             className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#FAF6F2] text-[#2B2118] rounded-full text-xs font-semibold uppercase tracking-[0.18em] hover:bg-[#EAD7C3] transition-all self-start md:self-auto shadow-md"
           >
-            <span>Explore Pre-Orders</span>
+            <span>Explore Pre-Order Drops</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

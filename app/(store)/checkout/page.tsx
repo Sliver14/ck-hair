@@ -22,14 +22,9 @@ const NIGERIAN_STATES = [
   "Lagos", "Abuja FCT", "Rivers", "Oyo", "Ogun", "Delta", "Edo", "Enugu", "Anambra", "Akwa Ibom", "Imo", "Kaduna", "Kano", "Kwara", "Ondo", "Osun", "Abia", "Cross River", "Plateau", "Benue", "Bayelsa", "Ekiti", "Ebonyi", "Bauchi", "Gombe", "Adamawa", "Borno", "Jigawa", "Katsina", "Kebbi", "Kogi", "Nasarawa", "Niger", "Sokoto", "Taraba", "Yobe", "Zamfara"
 ];
 
-const STUDIO_ADDRESS = "Admiralty Way, Lekki Phase 1, Lagos, Nigeria";
-
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, subtotal, hasPreorderItems, clearCart } = useCart();
-
-  // Fulfillment method: 'pickup' is default, 'delivery' is optional
-  const [fulfillmentMethod, setFulfillmentMethod] = useState<"pickup" | "delivery">("pickup");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -47,13 +42,7 @@ export default function CheckoutPage() {
   const [errorMsg, setErrorMsg] = useState("");
 
   const FREE_SHIPPING_THRESHOLD = 500000;
-  const deliveryFee =
-    fulfillmentMethod === "pickup"
-      ? 0
-      : subtotal >= FREE_SHIPPING_THRESHOLD
-      ? 0
-      : 5000;
-
+  const deliveryFee = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 5000;
   const total = subtotal + deliveryFee;
 
   useEffect(() => {
@@ -86,7 +75,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    if (fulfillmentMethod === "delivery" && (!formData.address || !formData.city)) {
+    if (!formData.address || !formData.city) {
       setErrorMsg("Please provide your complete delivery street address and city.");
       return;
     }
@@ -94,30 +83,15 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
-      const finalAddress =
-        fulfillmentMethod === "pickup"
-          ? `Store Pickup: ${STUDIO_ADDRESS}`
-          : formData.address;
-
-      const finalCity =
-        fulfillmentMethod === "pickup" ? "Lekki" : formData.city;
-
-      const finalState =
-        fulfillmentMethod === "pickup" ? "Lagos" : formData.state;
-
-      const customerNotesWithMethod = formData.notes
-        ? `[${fulfillmentMethod === "pickup" ? "Studio Pickup" : "Nationwide Delivery"}] ${formData.notes}`
-        : `[${fulfillmentMethod === "pickup" ? "Studio Pickup" : "Nationwide Delivery"}]`;
-
       const payload = {
         customerName: formData.name,
         customerEmail: formData.email,
         customerPhone: formData.phone,
         customerWhatsapp: formData.whatsapp || formData.phone,
-        deliveryAddress: finalAddress,
-        city: finalCity,
-        state: finalState,
-        customerNotes: customerNotesWithMethod,
+        deliveryAddress: formData.address,
+        city: formData.city,
+        state: formData.state,
+        customerNotes: formData.notes ? `[Nationwide Delivery] ${formData.notes}` : `[Nationwide Delivery]`,
         subtotal,
         deliveryFee,
         total,
@@ -265,193 +239,84 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* 2. Fulfillment Method (Pickup Default vs Optional Delivery) */}
+            {/* 2. Delivery Address (Nationwide Dispatch) */}
             <div className="bg-white p-6 sm:p-8 rounded-2xl border border-brand-border/60 shadow-xs space-y-6">
               <div className="flex items-center justify-between border-b border-brand-border/60 pb-3">
-                <h2 className="font-serif-luxury text-xl font-bold text-brand-dark">
-                  2. FULFILLMENT METHOD
+                <h2 className="font-serif-luxury text-xl font-bold text-brand-dark flex items-center gap-2">
+                  <Truck className="w-5 h-5 text-brand-dark" />
+                  <span>2. DELIVERY ADDRESS</span>
                 </h2>
-                <span className="text-[11px] text-brand-gold font-bold uppercase tracking-wider">
-                  Pickup (Default) or Delivery
+                <span className="text-[11px] text-[#B76E79] font-bold uppercase tracking-wider">
+                  Nationwide Dispatch
                 </span>
               </div>
 
-              {/* Selection cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {/* Option 1: Store Pickup (Default) */}
-                <div
-                  onClick={() => setFulfillmentMethod("pickup")}
-                  className={`p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between ${
-                    fulfillmentMethod === "pickup"
-                      ? "border-brand-dark bg-[#FAF9F5] shadow-xs"
-                      : "border-brand-border hover:border-brand-border/80 bg-white"
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Store className="w-4 h-4 text-brand-dark" />
-                        <span className="text-xs font-bold uppercase tracking-wider text-brand-dark">
-                          Store Pickup
-                        </span>
-                      </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-green-100 text-green-800">
-                        Default • Free
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-brand-muted font-light leading-relaxed">
-                      Collect directly from our luxury studio in Lekki Phase 1, Lagos.
-                    </p>
+              {/* Delivery Address Form */}
+              <div className="space-y-4 pt-1">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                    Street Address / House or Office Number *
+                  </label>
+                  <input
+                    type="text"
+                    name="address"
+                    required
+                    placeholder="e.g. Plot 12, Victoria Island / Maitama / GRA Phase 2"
+                    value={formData.address}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                      City / Area *
+                    </label>
+                    <input
+                      type="text"
+                      name="city"
+                      required
+                      placeholder="e.g. Lekki / Ikeja / Garki / Port Harcourt"
+                      value={formData.city}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
+                    />
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-brand-border/40 flex items-center justify-between text-xs">
-                    <span className="text-brand-muted">Cost</span>
-                    <span className="font-bold text-brand-dark">₦0 (FREE)</span>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                      State *
+                    </label>
+                    <select
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5] cursor-pointer"
+                    >
+                      {NIGERIAN_STATES.map((st) => (
+                        <option key={st} value={st}>
+                          {st}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
 
-                {/* Option 2: Nationwide Delivery (Optional) */}
-                <div
-                  onClick={() => setFulfillmentMethod("delivery")}
-                  className={`p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between ${
-                    fulfillmentMethod === "delivery"
-                      ? "border-brand-dark bg-[#FAF9F5] shadow-xs"
-                      : "border-brand-border hover:border-brand-border/80 bg-white"
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Truck className="w-4 h-4 text-brand-dark" />
-                        <span className="text-xs font-bold uppercase tracking-wider text-brand-dark">
-                          Nationwide Delivery
-                        </span>
-                      </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-sand text-brand-dark">
-                        Optional
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-brand-muted font-light leading-relaxed">
-                      Fast, insured delivery to your doorstep anywhere in Nigeria.
-                    </p>
-                  </div>
-
-                  <div className="mt-4 pt-3 border-t border-brand-border/40 flex items-center justify-between text-xs">
-                    <span className="text-brand-muted">Cost</span>
-                    <span className="font-bold text-brand-dark">
-                      {subtotal >= FREE_SHIPPING_THRESHOLD
-                        ? "FREE (Above ₦500k)"
-                        : "₦5,000 Flat Rate"}
-                    </span>
-                  </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
+                    Special Delivery Instructions or Landmark (Optional)
+                  </label>
+                  <textarea
+                    name="notes"
+                    rows={2}
+                    placeholder="e.g. Close to the bank junction, please call before arriving."
+                    value={formData.notes}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
+                  />
                 </div>
               </div>
-
-              {/* Conditional Content based on Fulfillment Selection */}
-              {fulfillmentMethod === "pickup" ? (
-                /* Studio Pickup Details Card */
-                <div className="p-5 rounded-2xl bg-[#FAF9F5] border border-brand-border/60 space-y-3">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-brand-gold flex-shrink-0 mt-0.5" />
-                    <div className="space-y-1">
-                      <h3 className="text-xs font-bold uppercase tracking-wider text-brand-dark">
-                        Pickup Location & Collection Hours
-                      </h3>
-                      <p className="text-xs font-medium text-brand-dark">
-                        {STUDIO_ADDRESS}
-                      </p>
-                      <p className="text-[11px] text-brand-muted">
-                        Operating Hours: Monday – Saturday (9:00 AM – 6:00 PM)
-                      </p>
-                      <p className="text-[11px] text-brand-muted font-light pt-1">
-                        We will notify you via WhatsApp as soon as your luxury hair piece is packaged and ready for collection.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="pt-3 border-t border-brand-border/40 space-y-1.5">
-                    <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                      Pickup Notes or Authorized Representative (Optional)
-                    </label>
-                    <input
-                      type="text"
-                      name="notes"
-                      placeholder="e.g. Will pick up on Saturday or sending dispatch rider"
-                      value={formData.notes}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-white"
-                    />
-                  </div>
-                </div>
-              ) : (
-                /* Delivery Address Form */
-                <div className="space-y-4 pt-2">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                      Street Address / House or Office Number *
-                    </label>
-                    <input
-                      type="text"
-                      name="address"
-                      required={fulfillmentMethod === "delivery"}
-                      placeholder="e.g. 15 Admiralty Way, Lekki Phase 1"
-                      value={formData.address}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                        City / Area *
-                      </label>
-                      <input
-                        type="text"
-                        name="city"
-                        required={fulfillmentMethod === "delivery"}
-                        placeholder="e.g. Lekki / Victoria Island / Ikeja"
-                        value={formData.city}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                        State *
-                      </label>
-                      <select
-                        name="state"
-                        value={formData.state}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5] cursor-pointer"
-                      >
-                        {NIGERIAN_STATES.map((st) => (
-                          <option key={st} value={st}>
-                            {st}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                      Special Delivery Instructions or Landmark
-                    </label>
-                    <textarea
-                      name="notes"
-                      rows={2}
-                      placeholder="e.g. Close to the junction, please call before arriving."
-                      value={formData.notes}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#F5F5F5]"
-                    />
-                  </div>
-                </div>
-              )}
-
             </div>
 
             {/* 3. Pre-order Terms Acknowledgment */}
@@ -524,19 +389,15 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="flex justify-between text-brand-muted">
-                  <span>Fulfillment Method</span>
-                  <span className="font-medium text-brand-dark">
-                    {fulfillmentMethod === "pickup" ? "Store Pickup (Default)" : "Nationwide Delivery"}
-                  </span>
+                  <span>Nationwide Dispatch</span>
+                  <span className="font-medium text-brand-dark">Door-to-Door Courier</span>
                 </div>
 
                 <div className="flex justify-between text-brand-muted">
-                  <span>Fulfillment Fee</span>
+                  <span>Delivery Fee</span>
                   <span className="font-medium text-brand-dark">
-                    {fulfillmentMethod === "pickup"
-                      ? "FREE (Complimentary Pickup)"
-                      : deliveryFee === 0
-                      ? "FREE (Complimentary)"
+                    {deliveryFee === 0
+                      ? "FREE (Orders above ₦500k)"
                       : formatPrice(deliveryFee)}
                   </span>
                 </div>

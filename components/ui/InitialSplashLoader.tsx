@@ -61,7 +61,7 @@ export function InitialSplashLoader() {
         >
           <HairLoader
             size="lg"
-            text="CK HAIR ATELIER"
+            text="CK HAIR"
             subtext="Luxury Hair • Effortless Confidence"
           />
         </div>

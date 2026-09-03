@@ -74,7 +74,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             <div className="py-12 flex items-center justify-center">
               <HairLoader
                 size="sm"
-                text="SEARCHING ATELIER"
+                text="SEARCHING COLLECTION"
                 subtext="Finding matching luxury pieces..."
               />
             </div>
@@ -92,7 +92,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 >
                   <div className="w-14 h-14 rounded-lg bg-brand-sand overflow-hidden flex-shrink-0">
                     <img
-                      src={product.images?.[0]?.url || "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&q=80"}
+                      src={product.images?.[0]?.url || "/ck-hair/ck-hair-01.jpeg"}
                       alt={product.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                     />

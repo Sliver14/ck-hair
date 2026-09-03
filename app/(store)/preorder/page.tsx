@@ -25,7 +25,7 @@ export default async function PreorderPage() {
           </div>
 
           <h1 className="font-serif-luxury text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-[#FAF6F2]">
-            PRE-ORDER ATELIER
+            PRE-ORDER COLLECTION
           </h1>
 
           <p className="text-xs md:text-base text-[#D8C7B8] max-w-2xl mx-auto font-light leading-relaxed">

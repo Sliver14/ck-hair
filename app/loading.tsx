@@ -6,7 +6,7 @@ export default function Loading() {
     <div className="min-h-screen bg-[#FAF6F2] flex items-center justify-center p-6">
       <HairLoader
         size="lg"
-        text="CK HAIR ATELIER"
+        text="CK HAIR"
         subtext="Preparing luxury raw & premium fiber pieces..."
       />
     </div>

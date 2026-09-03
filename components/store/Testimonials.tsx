@@ -4,22 +4,22 @@ import { Star, Quote } from "lucide-react";
 export function Testimonials() {
   const reviews = [
     {
-      name: "Amaka Eze",
-      location: "Lekki, Lagos",
-      comment: "Absolutely beautiful hair. The quality, fullness, and natural luster exceeded my expectations. Minimal shedding and it curled effortlessly!",
-      unit: "CK Signature Body Wave",
+      name: "Dr. Chioma Nwachukwu",
+      location: "Ikoyi, Lagos",
+      comment: "The Anna Bodywave is beyond compare. I used it for knotless boho braids for my wedding week, and 6 weeks later the curls are still bouncy, soft, and tangle-free. Truly couture quality.",
+      unit: "Anna Bodywave Braiding Fiber",
     },
     {
-      name: "Sarah Kalu",
-      location: "Victoria Island",
-      comment: "I loved how easy the ordering process was with direct WhatsApp confirmation. The HD lace melted into my skin completely seamlessly.",
-      unit: "HD Lace 13x4 Frontal",
+      name: "Zainab Al-Hassan",
+      location: "Maitama, Abuja",
+      comment: "Ordering via Bank Transfer with instant WhatsApp receipt verification made the whole process seamless. The HD lace frontal literally disappeared on my skin without glue.",
+      unit: "13x6 HD Skin-Melt Frontal",
     },
     {
-      name: "Tolu Adeleke",
-      location: "Abuja",
-      comment: "CK Hair has officially become my only go-to for luxury raw hair and ready-to-wear wigs. The pre-order arrived right on the promised schedule.",
-      unit: "Raw Burmese Curly Pre-Order",
+      name: "Blessing Douglas",
+      location: "GRA Phase 2, Port Harcourt",
+      comment: "CK Hair's Raw Vietnamese bundles are 100% thick from root to tip. Bleached them to honey blonde with zero shedding. My stylist was so impressed she ordered for her salon!",
+      unit: "100% Raw Hair Bundles (30\")",
     },
   ];
 
@@ -27,14 +27,14 @@ export function Testimonials() {
     <section className="py-16 md:py-24 bg-white border-b border-brand-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-brand-gold font-bold block">
-            Client Experiences
+          <span className="text-[11px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block">
+            Client Experiences & Proof
           </span>
           <h2 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark">
-            TESTED & ADORED
+            TESTED & ADORED ACROSS NIGERIA
           </h2>
           <p className="text-xs md:text-sm text-brand-muted font-light">
-            Real feedback from women who trust CK Hair for life's most unforgettable moments.
+            Read real verified experiences from women who trust CK Hair for life's most unforgettable moments.
           </p>
         </div>
 

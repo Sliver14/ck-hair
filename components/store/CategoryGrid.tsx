@@ -45,7 +45,7 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
               <img
                 src={
                   cat.image ||
-                  "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=85"
+                  "/ck-hair/ck-hair-02.jpeg"
                 }
                 alt={cat.name}
                 className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"

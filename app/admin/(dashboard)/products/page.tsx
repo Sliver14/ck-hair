@@ -61,7 +61,7 @@ export default async function AdminProductsPage() {
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-3">
                       <img
-                        src={prod.images?.[0]?.url || "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=200&q=80"}
+                        src={prod.images?.[0]?.url || "/ck-hair/ck-hair-01.jpeg"}
                         alt={prod.name}
                         className="w-12 h-14 rounded-lg object-cover bg-brand-sand"
                       />

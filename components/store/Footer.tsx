@@ -19,7 +19,7 @@ export function Footer({
   tagline = "Luxury Hair. Effortless Confidence.",
   phone = "+234 902 655 5783",
   email = "ckhair.ng@gmail.com",
-  address = "Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
+  address = "Online Boutique • Nationwide Delivery Across Nigeria",
   whatsapp = "2349026555783",
   instagram = "https://instagram.com/CK_Hair.Ng",
   tiktok = "https://tiktok.com/@ck.hair0",
@@ -86,7 +86,7 @@ export function Footer({
                 </li>
                 <li>
                   <Link href="/preorder" className="text-[#B76E79] font-medium hover:text-white transition-colors block">
-                    Pre-Order Atelier
+                    Pre-Order Collection
                   </Link>
                 </li>
               </ul>

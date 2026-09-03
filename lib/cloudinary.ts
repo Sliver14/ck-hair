@@ -1,11 +1,40 @@
 import { v2 as cloudinary, UploadApiResponse } from "cloudinary";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure: true,
-});
+// Helper to parse CLOUDINARY_URL
+function getCloudinaryCredentials() {
+  const rawUrl = process.env.CLOUDINARY_URL;
+  if (rawUrl) {
+    let cleaned = rawUrl.trim().replace(/^['"]|['"]$/g, "");
+    if (cleaned.startsWith("CLOUDINARY_URL=")) {
+      cleaned = cleaned.replace("CLOUDINARY_URL=", "").trim().replace(/^['"]|['"]$/g, "");
+    }
+    const match = cleaned.match(/^cloudinary:\/\/([^:]+):([^@]+)@(.+)$/);
+    if (match) {
+      return {
+        api_key: match[1],
+        api_secret: match[2],
+        cloud_name: match[3],
+      };
+    }
+  }
+
+  return {
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  };
+}
+
+const creds = getCloudinaryCredentials();
+
+if (creds.cloud_name && creds.api_key && creds.api_secret) {
+  cloudinary.config({
+    cloud_name: creds.cloud_name,
+    api_key: creds.api_key,
+    api_secret: creds.api_secret,
+    secure: true,
+  });
+}
 
 export interface CloudinaryUploadResult {
   url: string;
@@ -20,13 +49,11 @@ export async function uploadBufferToCloudinary(
   buffer: Buffer,
   folder: string = "ck-hair/products"
 ): Promise<CloudinaryUploadResult> {
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  const apiKey = process.env.CLOUDINARY_API_KEY;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  const activeCreds = getCloudinaryCredentials();
 
-  if (!cloudName || !apiKey || !apiSecret) {
+  if (!activeCreds.cloud_name || !activeCreds.api_key || !activeCreds.api_secret) {
     throw new Error(
-      "Cloudinary credentials are not configured. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in your .env file."
+      "Cloudinary is not configured. Please set a valid CLOUDINARY_URL in your .env file."
     );
   }
 

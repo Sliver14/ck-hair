@@ -15,7 +15,7 @@ async function main() {
       whatsapp: "2349026555783",
       instagram: "https://instagram.com/CK_Hair.Ng",
       tiktok: "https://tiktok.com/@ck.hair0",
-      address: "Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
+      address: "Online Boutique • Nationwide Delivery Across Nigeria",
     },
     create: {
       id: "default",
@@ -25,7 +25,7 @@ async function main() {
       email: "ckhair.ng@gmail.com",
       phone: "+234 902 655 5783",
       whatsapp: "2349026555783",
-      address: "Admiralty Way, Lekki Phase 1, Lagos, Nigeria",
+      address: "Online Boutique • Nationwide Delivery Across Nigeria",
       instagram: "https://instagram.com/CK_Hair.Ng",
       tiktok: "https://tiktok.com/@ck.hair0",
       facebook: "https://facebook.com/ckhair",
@@ -70,7 +70,7 @@ async function main() {
       id: "default",
       heroTitle: "LUXURY HAIR.\nEFFORTLESS CONFIDENCE.",
       heroSubtitle: "Premium raw human hair and signature blend fiber hair crafted for natural bounce, fluid movement, and timeless elegance.",
-      heroImage: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=1600&q=85",
+      heroImage: "/ck-hair/ck-hair-01.jpeg",
       primaryCtaText: "SHOP ALL HAIR",
       primaryCtaLink: "/shop",
       secondaryCtaText: "PRE-ORDER",
@@ -79,7 +79,7 @@ async function main() {
       announcementEnabled: true,
       editorialTitle: "THE CK HAIR EXPERIENCE",
       editorialSubtitle: "Hair that moves with grace, radiates natural sheen, and feels as luxurious as it looks.",
-      editorialImage: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=85",
+      editorialImage: "/ck-hair/ck-hair-04.jpeg",
     },
   });
 
@@ -108,7 +108,7 @@ async function main() {
       name: "Blend / Premium Fiber Hair",
       slug: "blend-premium-fiber-hair",
       description: "Luxurious heat-resistant premium fiber hair crafted for natural movement, versatile braiding, weft installs, and long-lasting luster.",
-      image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=85",
+      image: "/ck-hair/ck-hair-02.jpeg",
       featured: true,
       order: 1,
     },
@@ -116,7 +116,7 @@ async function main() {
       name: "Human Hair",
       slug: "human-hair",
       description: "100% Raw and Virgin human hair bundles, HD lace wigs, and skin-melt invisible frontals.",
-      image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=85",
+      image: "/ck-hair/ck-hair-03.jpeg",
       featured: true,
       order: 2,
     },
@@ -154,8 +154,8 @@ async function main() {
       bestseller: true,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=85",
-        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-01.jpeg",
+        "/ck-hair/ck-hair-06.jpeg",
       ],
     },
     // 2. Anna Bodywave (braiding) hair
@@ -180,7 +180,8 @@ async function main() {
       bestseller: true,
       isNew: true,
       images: [
-        "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-02.jpeg",
+        "/ck-hair/ck-hair-07.jpeg",
       ],
     },
     // 3. Anna Bodywave (weft) hair
@@ -205,7 +206,8 @@ async function main() {
       bestseller: false,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-03.jpeg",
+        "/ck-hair/ck-hair-08.jpeg",
       ],
     },
     // 4. Anna Straight
@@ -230,8 +232,8 @@ async function main() {
       bestseller: true,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=85",
-        "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-04.jpeg",
+        "/ck-hair/ck-hair-09.jpeg",
       ],
     },
     // 5. Anna Straight (braids)
@@ -256,7 +258,8 @@ async function main() {
       bestseller: true,
       isNew: true,
       images: [
-        "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-05.jpeg",
+        "/ck-hair/ck-hair-10.jpeg",
       ],
     },
     // 6. Anna Straight (weft)
@@ -281,7 +284,8 @@ async function main() {
       bestseller: false,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-06.jpeg",
+        "/ck-hair/ck-hair-11.jpeg",
       ],
     },
     // 7. Anna Natural Curl
@@ -306,7 +310,8 @@ async function main() {
       bestseller: false,
       isNew: true,
       images: [
-        "https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-07.jpeg",
+        "/ck-hair/ck-hair-12.jpeg",
       ],
     },
     // 8. Ariel Hair
@@ -331,7 +336,8 @@ async function main() {
       bestseller: true,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-08.jpeg",
+        "/ck-hair/ck-hair-13.jpeg",
       ],
     },
     // 9. French Curl
@@ -356,8 +362,8 @@ async function main() {
       bestseller: true,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=85",
-        "https://images.unsplash.com/photo-1560869713-7d0a29430803?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-09.jpeg",
+        "/ck-hair/ck-hair-14.jpeg",
       ],
     },
     // Human Hair - Raw Hair Bundles
@@ -382,7 +388,8 @@ async function main() {
       bestseller: true,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-10.jpeg",
+        "/ck-hair/ck-hair-15.jpeg",
       ],
     },
     // Human Hair - HD Glueless Wigs
@@ -407,7 +414,8 @@ async function main() {
       bestseller: true,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-11.jpeg",
+        "/ck-hair/ck-hair-16.jpeg",
       ],
     },
     // Human Hair - Frontals & Closures
@@ -432,7 +440,8 @@ async function main() {
       bestseller: false,
       isNew: false,
       images: [
-        "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=800&q=85",
+        "/ck-hair/ck-hair-12.jpeg",
+        "/ck-hair/ck-hair-17.jpeg",
       ],
     },
   ];

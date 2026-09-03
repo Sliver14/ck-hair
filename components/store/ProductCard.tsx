@@ -31,7 +31,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const primaryImage =
     product.images?.[0]?.url ||
-    "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&q=80";
+    "/ck-hair/ck-hair-01.jpeg";
 
   const isPreorder =
     product.availability === "PREORDER" ||

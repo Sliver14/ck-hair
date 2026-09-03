@@ -129,6 +129,61 @@
   animation: hairShimmerGlow 2.5s ease-in-out infinite;
 }
 
+/* Luxury Logo Loader Animations */
+@keyframes logoPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 4px 12px rgba(183, 110, 121, 0.15));
+  }
+  50% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 8px 24px rgba(183, 110, 121, 0.35));
+  }
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes ringRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(25deg);
+  }
+}
+
+.animate-logo-pulse {
+  animation: logoPulse 2.4s ease-in-out infinite;
+}
+
+.animate-logo-float {
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.animate-ring-rotate {
+  animation: ringRotate 8s linear infinite;
+}
+
+.animate-shimmer-sweep {
+  animation: shimmerSweep 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 /* Editorial image hover */
 .luxury-img-wrapper {
   overflow: hidden;
@@ -139,3 +194,4 @@
 .luxury-img-wrapper:hover img {
   transform: scale(1.04);
 }
+

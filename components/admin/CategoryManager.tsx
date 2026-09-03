@@ -57,7 +57,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
     setFormName("");
     setFormSlug("");
     setFormDescription("");
-    setFormImage("https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=85");
+    setFormImage("/ck-hair/ck-hair-02.jpeg");
     setFormParentId(parentId || "");
     setFormOrder(categories.length + 1);
     setFormFeatured(false);
@@ -250,7 +250,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-xl overflow-hidden bg-brand-sand border border-brand-border flex-shrink-0">
                     <img
-                      src={topCat.image || "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&q=80"}
+                      src={topCat.image || "/ck-hair/ck-hair-02.jpeg"}
                       alt={topCat.name}
                       className="w-full h-full object-cover"
                     />
@@ -320,7 +320,7 @@ export function CategoryManager({ initialCategories }: CategoryManagerProps) {
                         <div className="flex items-start gap-3">
                           <div className="w-12 h-12 rounded-lg bg-brand-sand overflow-hidden flex-shrink-0 border border-brand-border/60">
                             <img
-                              src={sub.image || topCat.image || "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80"}
+                              src={sub.image || topCat.image || "/ck-hair/ck-hair-02.jpeg"}
                               alt={sub.name}
                               className="w-full h-full object-cover"
                             />

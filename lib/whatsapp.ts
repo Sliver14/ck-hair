@@ -36,13 +36,7 @@ export function generateOrderWhatsAppMessage(order: WhatsAppOrderPayload): strin
 
   const orderType = order.isPreorder ? "PRE-ORDER" : "REGULAR ORDER";
 
-  const isPickup =
-    order.deliveryAddress?.toLowerCase().includes("store pickup") ||
-    order.deliveryAddress?.toLowerCase().includes("pickup");
-
-  const fulfillmentLine = isPickup
-    ? `• Fulfillment: Store Pickup (Admiralty Way, Lekki Phase 1, Lagos)`
-    : `• Delivery Address: ${order.deliveryAddress}, ${order.city}, ${order.state}`;
+  const fulfillmentLine = `• Delivery Address: ${order.deliveryAddress}, ${order.city}, ${order.state}`;
 
   return `Hello CK Hair,
 

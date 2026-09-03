@@ -66,7 +66,7 @@ export function ProductForm({
 
   const [images, setImages] = useState<string[]>(
     initialData?.images?.map((i: any) => i.url) || [
-      "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=85",
+      "/ck-hair/ck-hair-01.jpeg",
     ]
   );
   const [isSaving, setIsSaving] = useState(false);
@@ -567,7 +567,7 @@ export function ProductForm({
                 onChange={handleChange}
                 className="w-4 h-4 accent-brand-dark"
               />
-              <span>Feature on Homepage Atelier</span>
+              <span>Feature on Homepage</span>
             </label>
 
             <label className="flex items-center gap-2 cursor-pointer text-xs font-medium text-brand-dark">

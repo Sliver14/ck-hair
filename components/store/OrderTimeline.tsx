@@ -32,7 +32,7 @@ export function OrderTimeline({ order }: OrderTimelineProps) {
     { key: "AWAITING_PAYMENT", label: "Awaiting Bank Payment", desc: "Transfer pending confirmation" },
     { key: "PAYMENT_CONFIRMED", label: "Payment Confirmed", desc: "Funds verified by CK Hair" },
     { key: "PREORDER_PROCESSING", label: "Pre-Order Processing", desc: "Artisan tailoring & handcrafting" },
-    { key: "STOCK_ARRIVED", label: "Stock Arrived", desc: "Custom hair verified at atelier" },
+    { key: "STOCK_ARRIVED", label: "Stock Arrived", desc: "Custom hair verified & inspected" },
     { key: "PREPARING_ORDER", label: "Preparing Order", desc: "Wig customization & styling" },
     { key: "READY_FOR_DELIVERY", label: "Ready for Delivery", desc: "Dispatched to courier" },
     { key: "SHIPPED", label: "Shipped", desc: "In transit to your address" },

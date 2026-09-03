@@ -93,7 +93,7 @@ export function ProductDetailView({
     ? product.images
     : [
         {
-          url: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1000&q=85",
+          url: "/ck-hair/ck-hair-01.jpeg",
           alt: product.name,
         },
       ];
@@ -289,7 +289,7 @@ export function ProductDetailView({
                   </span>
                 </div>
                 <p className="text-[11px] text-amber-800 font-light">
-                  Ready for immediate nationwide dispatch or pickup. If you select more than {availableStock} pieces, the order automatically switches to Pre-Order.
+                  Ready for immediate nationwide dispatch. If you select more than {availableStock} pieces, the order automatically switches to Pre-Order.
                 </p>
               </div>
             ) : (

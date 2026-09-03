@@ -5,23 +5,23 @@ export function BrandBenefits() {
   const benefits = [
     {
       icon: Crown,
-      title: "PREMIUM QUALITY",
-      description: "Carefully selected single-donor virgin and raw hair for a long-lasting, natural finish.",
+      title: "ROYALTY-GRADE HAIR",
+      description: "Ethically sourced single-donor Raw Human Hair and heat-resilient Anna Fiber crafted for maximum luster, full ends, and zero tangling.",
     },
     {
       icon: Sparkles,
-      title: "VERSATILE STYLES",
-      description: "Crafted for effortless styling, seamless melting, and head-turning everyday luxury.",
+      title: "EFFORTLESS VERSATILITY",
+      description: "Flawless knotless braiding feed-ins, seamless weft sew-ins, bouncy French curls, and custom glueless wigs that hold all-day definition.",
     },
     {
       icon: ShieldCheck,
-      title: "SECURE ORDERING",
-      description: "Convenient bank transfer payments with direct, personalized WhatsApp confirmation.",
+      title: "ZERO-STRESS CHECKOUT",
+      description: "Smooth direct Bank Transfers with instant confirmation through your dedicated personal WhatsApp concierge.",
     },
     {
       icon: Truck,
-      title: "RELIABLE DELIVERY",
-      description: "Every unit is hand-inspected, packaged in luxury boxes, and dispatched swiftly.",
+      title: "NATIONWIDE VIP DISPATCH",
+      description: "Dispatched from Lagos across Nigeria in signature satin-lined luxury packaging, fully tracked straight to your doorstep.",
     },
   ];
 

@@ -9,9 +9,9 @@ interface EditorialStoryProps {
 }
 
 export function EditorialStory({
-  title = "THE CK HAIR EXPERIENCE",
-  subtitle = "Hair that moves with grace, radiates natural sheen, and feels as pure and unforgettable as it looks.",
-  image = "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
+  title = "THE CK HAIR PROMISE",
+  subtitle = "Born in Lagos. Crafted for royalty. Hair that moves with natural grace, retains luminous sheen, and feels as luxurious as it looks.",
+  image = "/ck-hair/ck-hair-04.jpeg",
 }: EditorialStoryProps) {
   return (
     <section className="py-10 sm:py-12 md:py-14 bg-[#FAF6F2] border-b border-brand-border/60">
@@ -34,7 +34,7 @@ export function EditorialStory({
                   ))}
                 </div>
                 <p className="font-serif-luxury text-xs sm:text-sm font-light italic text-white/95 leading-snug">
-                  “Couture hair pieces designed to help every woman step into effortless confidence.”
+                  “Your hair is your crowning glory. When your hair is immaculate, effortless confidence follows.”
                 </p>
               </div>
             </div>
@@ -43,7 +43,7 @@ export function EditorialStory({
           {/* Text Story */}
           <div className="lg:col-span-7 xl:col-span-7 space-y-3 sm:space-y-4">
             <span className="text-[10px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block">
-              Our Philosophy
+              Our Philosophy & Heritage
             </span>
             <h2 className="font-serif-luxury text-2xl sm:text-3xl lg:text-[2.15rem] font-bold text-brand-dark leading-snug">
               {title}
@@ -52,7 +52,7 @@ export function EditorialStory({
               {subtitle}
             </p>
             <p className="text-xs sm:text-sm text-[#8C7A6B] leading-relaxed font-light hidden sm:block">
-              At CK Hair, we believe that luxury hair is never just an accessory. It is an expression of confidence, individuality, and personal power. We ethically source raw, healthy donor hair and meticulously construct our wigs with melt-on-contact Swiss HD lace.
+              We founded CK Hair with a singular obsession: to eliminate the guesswork from luxury hair in Nigeria. Whether it is our single-donor Raw Vietnamese bundles or signature Anna Fiber tailored for knotless braids, every unit is engineered for full double-drawn density, high heat tolerance, and skin-melt invisible lace.
             </p>
 
             <div className="pt-2">
@@ -60,7 +60,7 @@ export function EditorialStory({
                 href="/about"
                 className="inline-flex items-center gap-2 px-6 py-2.5 sm:py-3 bg-brand-dark text-white rounded-full text-[11px] font-semibold uppercase tracking-[0.18em] hover:bg-[#3E3025] transition-all shadow-sm active:scale-98"
               >
-                <span>Discover CK Hair</span>
+                <span>Read Our Full Story</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#B76E79]" />
               </Link>
             </div>

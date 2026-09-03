@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   if (!product) return { title: "Product Not Found — CK Hair" };
 
   return {
-    title: `${product.name} — CK Hair Luxury Atelier`,
+    title: `${product.name} — CK Hair Luxury`,
     description: product.shortDescription || product.description.substring(0, 160),
     openGraph: {
       title: `${product.name} — CK Hair`,

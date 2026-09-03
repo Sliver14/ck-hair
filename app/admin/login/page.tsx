@@ -146,7 +146,7 @@ export default function AdminLoginPage() {
 
       {/* Footer */}
       <div className="text-center text-xs text-[#555550] z-10">
-        <p>© {new Date().getFullYear()} CK Hair Global Atelier. Authorized Personnel Only.</p>
+        <p>© {new Date().getFullYear()} CK Hair. Authorized Personnel Only.</p>
       </div>
     </div>
   );

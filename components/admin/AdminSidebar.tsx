@@ -42,7 +42,7 @@ export function AdminSidebar() {
       title: "ORDERS & PRE-ORDERS",
       items: [
         { label: "All Orders", href: "/admin/orders", icon: ShoppingBag },
-        { label: "Pre-Orders Atelier", href: "/admin/preorders", icon: Clock },
+        { label: "Pre-Orders", href: "/admin/preorders", icon: Clock },
         { label: "Customers", href: "/admin/customers", icon: Users },
       ],
     },

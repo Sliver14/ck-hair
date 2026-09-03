@@ -275,7 +275,7 @@ export function SettingsManager({
 
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                Store Location / Atelier Address
+                Store Location / Dispatch Info
               </label>
               <input
                 type="text"

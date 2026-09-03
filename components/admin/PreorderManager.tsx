@@ -37,7 +37,7 @@ export function PreorderManager({
           body: JSON.stringify({
             status: "STOCK_ARRIVED",
             note: `Supplier batch stock arrived for ${productName}`,
-            changedBy: "CK Atelier Admin",
+            changedBy: "CK Hair Admin",
           }),
         });
       }
@@ -62,7 +62,7 @@ export function PreorderManager({
       {/* Header */}
       <div>
         <h1 className="font-serif-luxury text-2xl sm:text-3xl font-bold text-brand-dark">
-          PRE-ORDERS ATELIER MANAGEMENT
+          PRE-ORDERS MANAGEMENT
         </h1>
         <p className="text-xs text-brand-muted mt-0.5">
           Track bespoke customer reservations, supplier manufacturing batches, and stock arrival triggers.
@@ -98,7 +98,7 @@ export function PreorderManager({
 
         <div className="bg-white p-6 rounded-2xl border border-brand-border/60 shadow-xs space-y-1">
           <span className="text-[10px] uppercase tracking-wider text-brand-muted font-bold">
-            Active Atelier Pieces
+            Active Pre-Order Models
           </span>
           <p className="font-serif-luxury text-2xl sm:text-3xl font-bold text-brand-dark">
             {preorderProducts.length} Models
@@ -128,7 +128,7 @@ export function PreorderManager({
               >
                 <div className="flex items-start gap-4">
                   <img
-                    src={prod.images?.[0]?.url || "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=300&q=80"}
+                    src={prod.images?.[0]?.url || "/ck-hair/ck-hair-01.jpeg"}
                     alt={prod.name}
                     className="w-16 h-20 rounded-xl object-cover bg-brand-sand flex-shrink-0"
                   />
@@ -181,7 +181,7 @@ export function PreorderManager({
                 <th className="py-4 px-6">Unit</th>
                 <th className="py-4 px-6">Amount</th>
                 <th className="py-4 px-6">Payment</th>
-                <th className="py-4 px-6">Atelier Status</th>
+                <th className="py-4 px-6">Order Status</th>
                 <th className="py-4 px-6 text-right">Action</th>
               </tr>
             </thead>
