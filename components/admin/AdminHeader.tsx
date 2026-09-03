@@ -8,11 +8,13 @@ import Link from "next/link";
 interface AdminHeaderProps {
   adminName?: string;
   storeStatus?: string;
+  onOpenMobileSidebar?: () => void;
 }
 
 export function AdminHeader({
   adminName = "CK Hair Admin",
   storeStatus = "ONLINE",
+  onOpenMobileSidebar,
 }: AdminHeaderProps) {
   const router = useRouter();
 
@@ -27,8 +29,30 @@ export function AdminHeader({
   };
 
   return (
-    <header className="bg-white border-b border-brand-border/60 py-3.5 px-6 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
+    <header className="bg-white border-b border-brand-border/60 py-3.5 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs">
       <div className="flex items-center gap-3">
+        {onOpenMobileSidebar && (
+          <button
+            onClick={onOpenMobileSidebar}
+            className="p-2 -ml-1 text-brand-dark hover:bg-brand-sand rounded-xl lg:hidden transition-colors"
+            aria-label="Open admin sidebar"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        )}
+
         <span
           className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
             storeStatus === "ONLINE"

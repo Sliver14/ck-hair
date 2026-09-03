@@ -78,14 +78,14 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-8">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-xs uppercase tracking-[0.18em] font-medium transition-colors relative py-1 ${
+                  className={`text-[11px] lg:text-xs uppercase tracking-[0.15em] lg:tracking-[0.18em] font-medium transition-colors relative py-1 ${
                     isActive
                       ? "text-brand-dark font-semibold"
                       : "text-brand-muted hover:text-brand-dark"

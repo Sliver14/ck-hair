@@ -55,9 +55,9 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent transition-opacity" />
 
               {/* Text overlay */}
-              <div className="absolute bottom-0 inset-x-0 p-6 md:p-8 text-white flex flex-col justify-end">
+              <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 md:p-8 text-white flex flex-col justify-end">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-serif-luxury text-2xl md:text-3xl font-bold tracking-wide group-hover:translate-x-1 transition-transform text-white/80">
+                  <h3 className="font-serif-luxury text-xl sm:text-2xl md:text-3xl font-bold tracking-wide group-hover:translate-x-1 transition-transform text-white">
                     {cat.name}
                   </h3>
                   <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-white group-hover:text-brand-dark transition-all">

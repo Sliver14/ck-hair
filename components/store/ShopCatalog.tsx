@@ -422,22 +422,99 @@ export function ShopCatalog({
                 )}
 
                 {/* Textures */}
-                <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider mb-2 text-brand-dark">Texture</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {textures.map((t) => (
+                {textures.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider mb-2 text-brand-dark">Hair Texture</h4>
+                    <div className="flex flex-wrap gap-1.5">
                       <button
-                        key={t}
-                        onClick={() => { setSelectedTexture(t); setIsMobileFilterOpen(false); }}
+                        onClick={() => { setSelectedTexture("all"); }}
                         className={`text-xs px-3 py-1 rounded-full ${
-                          selectedTexture === t ? "bg-brand-dark text-white" : "bg-brand-sand text-brand-dark"
+                          selectedTexture === "all" ? "bg-brand-dark text-white" : "bg-brand-sand text-brand-dark"
                         }`}
                       >
-                        {t}
+                        All
                       </button>
-                    ))}
+                      {textures.map((t) => (
+                        <button
+                          key={t}
+                          onClick={() => { setSelectedTexture(t); }}
+                          className={`text-xs px-3 py-1 rounded-full ${
+                            selectedTexture === t ? "bg-brand-dark text-white" : "bg-brand-sand text-brand-dark"
+                          }`}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {/* Hair Type */}
+                {hairTypes.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider mb-2 text-brand-dark">Hair Origin & Grade</h4>
+                    <div className="space-y-1">
+                      <button
+                        onClick={() => { setSelectedHairType("all"); }}
+                        className={`block text-xs py-1 text-left w-full ${
+                          selectedHairType === "all" ? "font-bold text-brand-dark pl-2 border-l-2 border-brand-dark" : "text-brand-muted hover:text-brand-dark"
+                        }`}
+                      >
+                        All Grades
+                      </button>
+                      {hairTypes.map((ht) => (
+                        <button
+                          key={ht}
+                          onClick={() => { setSelectedHairType(ht); }}
+                          className={`block text-xs py-1 text-left w-full ${
+                            selectedHairType === ht ? "font-bold text-brand-dark pl-2 border-l-2 border-brand-dark" : "text-brand-muted hover:text-brand-dark"
+                          }`}
+                        >
+                          {ht}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Availability */}
+                {!isPreorderPage && (
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider mb-2 text-brand-dark">Availability</h4>
+                    <div className="space-y-2 text-xs text-brand-dark">
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="mobileAvail"
+                          checked={selectedAvailability === "all"}
+                          onChange={() => setSelectedAvailability("all")}
+                          className="accent-brand-dark"
+                        />
+                        <span>All Items</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="mobileAvail"
+                          checked={selectedAvailability === "IN_STOCK"}
+                          onChange={() => setSelectedAvailability("IN_STOCK")}
+                          className="accent-brand-dark"
+                        />
+                        <span>In Stock Only</span>
+                      </label>
+                      <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="mobileAvail"
+                          checked={selectedAvailability === "PREORDER"}
+                          onChange={() => setSelectedAvailability("PREORDER")}
+                          className="accent-brand-dark"
+                        />
+                        <span>Pre-Order Drops Only</span>
+                      </label>
+                    </div>
+                  </div>
+                )}
 
               </div>
 

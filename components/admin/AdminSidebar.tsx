@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -17,10 +17,44 @@ import {
   Home,
   ExternalLink,
   ShieldCheck,
+  X,
 } from "lucide-react";
 
-export function AdminSidebar() {
+interface AdminSidebarProps {
+  isMobileOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function AdminSidebar({ isMobileOpen = false, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  // Close on Escape key or outside click
+  useEffect(() => {
+    if (!isMobileOpen || !onClose) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    const handlePointerDown = (e: MouseEvent | TouchEvent) => {
+      if (drawerRef.current && !drawerRef.current.contains(e.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+    };
+  }, [isMobileOpen, onClose]);
 
   const sections = [
     {
@@ -54,11 +88,11 @@ export function AdminSidebar() {
     },
   ];
 
-  return (
-    <aside className="w-64 bg-[#141414] text-[#E0E0DC] border-r border-[#262626] flex flex-col justify-between shrink-0 h-screen sticky top-0">
+  const renderSidebarInner = (isDrawer = false) => (
+    <div className="flex flex-col justify-between h-full">
       {/* Brand Header */}
       <div className="p-5 border-b border-[#262626] flex items-center justify-between">
-        <Link href="/admin/dashboard" className="flex items-center gap-3">
+        <Link href="/admin/dashboard" onClick={onClose} className="flex items-center gap-3">
           <div className="p-1 rounded-xl bg-[#FAF6F2] shadow-xs">
             <img
               src="/logo.png"
@@ -75,6 +109,16 @@ export function AdminSidebar() {
             </span>
           </div>
         </Link>
+
+        {isDrawer && onClose && (
+          <button
+            onClick={onClose}
+            className="p-1.5 rounded-lg text-[#8A8A80] hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Close sidebar"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
       </div>
 
       {/* Navigation Links */}
@@ -91,6 +135,7 @@ export function AdminSidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={onClose}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-all ${
                     isActive
                       ? "bg-white text-brand-dark font-semibold shadow-xs"
@@ -120,6 +165,36 @@ export function AdminSidebar() {
           <span className="w-2 h-2 rounded-full bg-green-500" />
         </Link>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Fixed Sidebar */}
+      <aside className="hidden lg:flex w-64 bg-[#141414] text-[#E0E0DC] border-r border-[#262626] flex-col justify-between shrink-0 h-screen sticky top-0">
+        {renderSidebarInner(false)}
+      </aside>
+
+      {/* Mobile / Tablet Slide-over Drawer */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden animate-fade-in">
+          {/* Dark Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity cursor-pointer"
+            onClick={onClose}
+          />
+
+          {/* Drawer Content */}
+          <div className="fixed inset-y-0 left-0 max-w-full flex pr-10 pointer-events-none">
+            <div
+              ref={drawerRef}
+              className="w-screen max-w-xs bg-[#141414] text-[#E0E0DC] shadow-2xl animate-slide-in-left h-full pointer-events-auto"
+            >
+              {renderSidebarInner(true)}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
