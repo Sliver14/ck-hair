@@ -12,7 +12,7 @@ export default async function AddProductPage() {
 
   return (
     <ProductForm
-      categories={categories}
+      categories={JSON.parse(JSON.stringify(categories))}
       isEditing={false}
     />
   );

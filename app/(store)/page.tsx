@@ -1,5 +1,5 @@
 import React from "react";
-import { getHomepageSettings } from "@/lib/db/settings";
+import { getHomepageSettings, getStoreSettings } from "@/lib/db/settings";
 import { getActiveProducts, getCategories } from "@/lib/db/products";
 import { Hero } from "@/components/store/Hero";
 import { BrandBenefits } from "@/components/store/BrandBenefits";
@@ -14,9 +14,10 @@ import { Newsletter } from "@/components/store/Newsletter";
 export const revalidate = 0;
 
 export default async function HomePage() {
-  const [homepageSettings, featuredProducts, preorderProducts, categories] =
+  const [homepageSettings, storeSettings, featuredProducts, preorderProducts, categories] =
     await Promise.all([
       getHomepageSettings(),
+      getStoreSettings(),
       getActiveProducts({ limit: 12 }),
       getActiveProducts({ preorderOnly: true, limit: 4 }),
       getCategories(),
@@ -50,7 +51,10 @@ export default async function HomePage() {
 
       <Testimonials />
 
-      <InstagramGrid />
+      <InstagramGrid
+        instagramUrl={storeSettings.instagram}
+        tiktokUrl={storeSettings.tiktok}
+      />
 
       <Newsletter />
     </div>

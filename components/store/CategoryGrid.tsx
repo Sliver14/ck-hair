@@ -19,16 +19,16 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
-            <span className="text-[11px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block mb-2">
+            <span className="text-[11px] uppercase tracking-[0.22em] text-[#C48A90] font-bold block mb-2">
               Signature Categories
             </span>
-            <h2 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark">
+            <h2 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold text-[#756558]">
               SHOP BY CATEGORY
             </h2>
           </div>
           <Link
             href="/shop"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-brand-dark hover:text-brand-gold transition-colors pb-1 border-b border-brand-dark"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-[#756558] hover:text-brand-dark transition-colors pb-1 border-b border-[#756558]/40 hover:border-brand-dark"
           >
             <span>Explore All Hair</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -57,7 +57,7 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
               {/* Text overlay */}
               <div className="absolute bottom-0 inset-x-0 p-6 md:p-8 text-white flex flex-col justify-end">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-serif-luxury text-2xl md:text-3xl font-bold tracking-wide group-hover:translate-x-1 transition-transform">
+                  <h3 className="font-serif-luxury text-2xl md:text-3xl font-bold tracking-wide group-hover:translate-x-1 transition-transform text-white/80">
                     {cat.name}
                   </h3>
                   <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center text-white group-hover:bg-white group-hover:text-brand-dark transition-all">

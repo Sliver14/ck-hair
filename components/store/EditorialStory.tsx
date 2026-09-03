@@ -14,25 +14,26 @@ export function EditorialStory({
   image = "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=85",
 }: EditorialStoryProps) {
   return (
-    <section className="py-16 md:py-24 bg-[#FAF6F2] border-b border-brand-border/60">
+    <section className="py-10 sm:py-12 md:py-14 bg-[#FAF6F2] border-b border-brand-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
           {/* Editorial Image */}
-          <div className="lg:col-span-6">
-            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl bg-white border border-brand-border">
+          <div className="lg:col-span-5 xl:col-span-5">
+            <div className="relative h-[250px] sm:h-[290px] lg:h-[320px] w-full rounded-2xl overflow-hidden shadow-lg bg-white border border-brand-border group">
               <img
                 src={image}
                 alt="The CK Hair Experience"
-                className="w-full h-full object-cover object-center"
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 text-white">
-                <div className="flex items-center gap-1 mb-2 text-[#B76E79]">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 p-3 rounded-xl bg-black/35 backdrop-blur-xs border border-white/10 text-white">
+                <div className="flex items-center gap-1 mb-1 text-[#B76E79]">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#B76E79] text-[#B76E79]" />
+                    <Star key={i} className="w-3 h-3 fill-[#B76E79] text-[#B76E79]" />
                   ))}
                 </div>
-                <p className="font-serif-luxury text-xl md:text-2xl font-light italic">
+                <p className="font-serif-luxury text-xs sm:text-sm font-light italic text-white/95 leading-snug">
                   “Couture hair pieces designed to help every woman step into effortless confidence.”
                 </p>
               </div>
@@ -40,27 +41,27 @@ export function EditorialStory({
           </div>
 
           {/* Text Story */}
-          <div className="lg:col-span-6 space-y-6 md:space-y-8">
-            <span className="text-[11px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block">
+          <div className="lg:col-span-7 xl:col-span-7 space-y-3 sm:space-y-4">
+            <span className="text-[10px] uppercase tracking-[0.22em] text-[#B76E79] font-bold block">
               Our Philosophy
             </span>
-            <h2 className="font-serif-luxury text-3xl md:text-4xl lg:text-5xl font-bold text-brand-dark leading-tight">
+            <h2 className="font-serif-luxury text-2xl sm:text-3xl lg:text-[2.15rem] font-bold text-brand-dark leading-snug">
               {title}
             </h2>
-            <p className="text-sm md:text-base text-brand-muted leading-relaxed font-light">
+            <p className="text-xs sm:text-sm text-[#8C7A6B] leading-relaxed font-light">
               {subtitle}
             </p>
-            <p className="text-xs md:text-sm text-brand-muted leading-relaxed font-light">
+            <p className="text-xs sm:text-sm text-[#8C7A6B] leading-relaxed font-light hidden sm:block">
               At CK Hair, we believe that luxury hair is never just an accessory. It is an expression of confidence, individuality, and personal power. We ethically source raw, healthy donor hair and meticulously construct our wigs with melt-on-contact Swiss HD lace.
             </p>
 
-            <div className="pt-4">
+            <div className="pt-2">
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-brand-dark text-white rounded-full text-xs font-semibold uppercase tracking-[0.2em] hover:bg-black transition-all shadow-md active:scale-98"
+                className="inline-flex items-center gap-2 px-6 py-2.5 sm:py-3 bg-brand-dark text-white rounded-full text-[11px] font-semibold uppercase tracking-[0.18em] hover:bg-[#3E3025] transition-all shadow-sm active:scale-98"
               >
                 <span>Discover CK Hair</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-3.5 h-3.5 text-[#B76E79]" />
               </Link>
             </div>
           </div>

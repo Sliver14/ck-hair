@@ -11,14 +11,14 @@ export function AnnouncementBar({ text, enabled = true }: AnnouncementBarProps) 
   return (
     <aside
       aria-label="Announcement"
-      className="bg-[#2B2118] text-[#D8C7B8] text-[9.5px] sm:text-[10.5px] tracking-[0.2em] uppercase py-2 px-4 text-center font-light border-b border-[#3E3025]"
+      className="bg-[#1C150E] text-[#D8C7B8] py-2 px-4 text-center border-b border-[#2E2218] relative z-50"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-center space-x-2.5">
-        <span className="text-[#B76E79] text-[10px]">✦</span>
-        <p className="inline text-[#FAF6F2] font-normal tracking-[0.22em] leading-tight">
+      <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 sm:gap-3">
+        <span className="text-[#B76E79] text-[8px] sm:text-[9px] opacity-75 select-none">✦</span>
+        <p className="text-[8.5px] sm:text-[9.5px] font-normal tracking-[0.28em] uppercase text-[#F3EBE1] leading-none">
           {text}
         </p>
-        <span className="text-[#B76E79] text-[10px]">✦</span>
+        <span className="text-[#B76E79] text-[8px] sm:text-[9px] opacity-75 select-none">✦</span>
       </div>
     </aside>
   );

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, ShoppingBag, Menu, X, Shield, PhoneCall } from "lucide-react";
+import { Search, ShoppingBag, Menu, X, PhoneCall } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
 import { SearchModal } from "./SearchModal";
 
@@ -110,14 +110,6 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
               <Search className="w-4 h-4" />
             </button>
 
-            <Link
-              href="/admin/dashboard"
-              className="hidden lg:flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-brand-muted hover:text-brand-dark transition-colors py-1 px-2.5 rounded-full border border-brand-border/60 hover:border-brand-dark"
-            >
-              <Shield className="w-3 h-3" />
-              <span>Admin</span>
-            </Link>
-
             <button
               onClick={openCart}
               className="flex items-center gap-2 p-1.5 text-brand-dark hover:text-brand-gold transition-colors relative"
@@ -188,19 +180,11 @@ export function Header({ storeName = "CK HAIR", whatsapp = "2349026555783" }: He
                   href={`https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#25D366] text-white rounded-full text-xs font-semibold uppercase tracking-wider"
+                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#25D366] text-white rounded-full text-xs font-semibold uppercase tracking-wider shadow-sm"
                 >
                   <PhoneCall className="w-3.5 h-3.5" />
                   <span>WhatsApp Concierge</span>
                 </a>
-                <Link
-                  href="/admin/dashboard"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 text-brand-muted hover:text-brand-dark border border-brand-border rounded-full text-xs font-semibold uppercase tracking-wider"
-                >
-                  <Shield className="w-3.5 h-3.5" />
-                  <span>Admin Dashboard</span>
-                </Link>
               </div>
             </div>
           </div>

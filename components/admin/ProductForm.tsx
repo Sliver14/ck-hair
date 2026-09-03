@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Save, Plus, Trash2, Clock, Sparkles, RefreshCw } from "lucide-react";
+import { CloudinaryImageUploader } from "./CloudinaryImageUploader";
 
 interface ProductFormProps {
   initialData?: any;
@@ -68,7 +69,6 @@ export function ProductForm({
       "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=85",
     ]
   );
-  const [newImageUrl, setNewImageUrl] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -114,16 +114,6 @@ export function ProductForm({
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
-  };
-
-  const addImage = () => {
-    if (!newImageUrl.trim()) return;
-    setImages((prev) => [...prev, newImageUrl.trim()]);
-    setNewImageUrl("");
-  };
-
-  const removeImage = (idx: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== idx));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -254,33 +244,16 @@ export function ProductForm({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider">
-                    SKU (Stock Keeping Unit) *
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        sku: generateSku(prev.name || "ITEM"),
-                      }))
-                    }
-                    className="text-[10px] text-[#B76E79] hover:text-[#2B2118] font-bold uppercase tracking-wider flex items-center gap-1 transition-colors"
-                    title="Auto-generate new SKU"
-                  >
-                    <Sparkles className="w-3 h-3" />
-                    <span>Auto Generate</span>
-                  </button>
-                </div>
+                <label className="text-xs font-semibold text-brand-dark uppercase tracking-wider block">
+                  SKU (Stock Keeping Unit)
+                </label>
                 <input
                   type="text"
                   name="sku"
-                  required
+                  disabled
                   value={formData.sku}
-                  onChange={handleChange}
-                  placeholder="e.g. CKH-BW-1024"
-                  className="w-full px-4 py-2.5 rounded-xl border border-brand-border text-xs font-mono font-semibold tracking-wider outline-none focus:border-brand-dark bg-[#FAFAF8]"
+                  placeholder="Auto-generated SKU"
+                  className="w-full px-4 py-2.5 rounded-xl border border-brand-border/80 text-xs font-mono font-semibold tracking-wider bg-stone-100 text-stone-600 cursor-not-allowed select-none"
                 />
               </div>
 
@@ -463,53 +436,14 @@ export function ProductForm({
             </div>
           </div>
 
-          {/* Product Images Gallery */}
-          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-brand-border/60 shadow-xs space-y-4">
-            <h2 className="font-serif-luxury text-lg font-bold text-brand-dark border-b border-brand-border/60 pb-2">
-              Image Gallery URLs
-            </h2>
-
-            <div className="flex gap-2">
-              <input
-                type="url"
-                placeholder="Paste direct high-res image URL (e.g. https://...)"
-                value={newImageUrl}
-                onChange={(e) => setNewImageUrl(e.target.value)}
-                className="flex-1 px-4 py-2.5 rounded-xl border border-brand-border text-xs outline-none focus:border-brand-dark bg-[#FAFAF8]"
-              />
-              <button
-                type="button"
-                onClick={addImage}
-                className="px-4 py-2.5 bg-brand-dark text-white rounded-xl text-xs font-semibold uppercase tracking-wider hover:bg-black transition-all flex items-center gap-1.5"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Add</span>
-              </button>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
-              {images.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="relative aspect-[3/4] rounded-xl overflow-hidden bg-brand-sand border border-brand-border group"
-                >
-                  <img src={img} alt={`Preview ${idx + 1}`} className="w-full h-full object-cover" />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(idx)}
-                    className="absolute top-2 right-2 p-1.5 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                  {idx === 0 && (
-                    <span className="absolute bottom-2 left-2 text-[9px] uppercase tracking-wider bg-brand-dark text-white px-2 py-0.5 rounded font-bold">
-                      Cover
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Product Images Gallery with Cloudinary */}
+          <CloudinaryImageUploader
+            images={images}
+            onChange={setImages}
+            folder="ck-hair/products"
+            label="Product Image Showcase"
+            description="Upload multiple high-definition photos directly to Cloudinary or paste web image URLs."
+          />
 
         </div>
 
