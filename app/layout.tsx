@@ -1,9 +1,15 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/store/CartDrawer";
 import { CartToast } from "@/components/store/CartToast";
 import { InitialSplashLoader } from "@/components/ui/InitialSplashLoader";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   title: "CK HAIR — Luxury Hair. Effortless Confidence.",

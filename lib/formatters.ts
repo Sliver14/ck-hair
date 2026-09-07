@@ -6,15 +6,30 @@ export function formatPrice(amount: number, currency: string = "NGN"): string {
   }).format(amount).replace("NGN", "₦").trim();
 }
 
-export function formatDate(date: Date | string): string {
-  const d = typeof date === "string" ? new Date(date) : date;
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(d);
+export function formatDate(date: Date | string | null | undefined): string {
+  if (!date) return "—";
+  try {
+    let d: Date;
+    if (typeof date === "string") {
+      // iOS Safari strict ISO fix for space-separated date strings (e.g. "YYYY-MM-DD HH:mm:ss")
+      const sanitized = date.includes(" ") && !date.includes("T") ? date.replace(" ", "T") : date;
+      d = new Date(sanitized);
+    } else {
+      d = date;
+    }
+
+    if (isNaN(d.getTime())) return "—";
+
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(d);
+  } catch {
+    return "—";
+  }
 }
 
 export function generateOrderNumber(): string {

@@ -30,11 +30,10 @@ export default function AdminLoginPage() {
         throw new Error(data.error || "Invalid login credentials");
       }
 
-      router.push("/admin/dashboard");
-      router.refresh();
+      // Hard redirect to ensure WebKit / iOS Safari commits session cookies before loading dashboard
+      window.location.href = "/admin/dashboard";
     } catch (err: any) {
       setErrorMsg(err.message || "Failed to authenticate");
-    } finally {
       setIsLoading(false);
     }
   };
@@ -110,7 +109,7 @@ export default function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#2B2118] border border-[#524133] text-white text-xs outline-none focus:border-[#B76E79] transition-colors font-light"
+                  className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#2B2118] border border-[#524133] text-white text-base sm:text-xs outline-none focus:border-[#B76E79] transition-colors font-light"
                 />
               </div>
             </div>
@@ -126,7 +125,7 @@ export default function AdminLoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#2B2118] border border-[#524133] text-white text-xs outline-none focus:border-[#B76E79] transition-colors font-light"
+                  className="w-full pl-11 pr-4 py-3 rounded-xl bg-[#2B2118] border border-[#524133] text-white text-base sm:text-xs outline-none focus:border-[#B76E79] transition-colors font-light"
                 />
               </div>
             </div>

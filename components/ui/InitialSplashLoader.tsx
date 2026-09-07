@@ -9,9 +9,14 @@ export function InitialSplashLoader() {
   const [isFading, setIsFading] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const pathname = usePathname();
+  const isAdmin = pathname?.startsWith("/admin");
 
   // Initial Fullscreen Splash on page load/refresh
   useEffect(() => {
+    if (isAdmin) {
+      setShowSplash(false);
+      return;
+    }
     // Show splash for 1.8 seconds, then trigger smooth fade out
     const fadeTimer = setTimeout(() => {
       setIsFading(true);
@@ -29,13 +34,16 @@ export function InitialSplashLoader() {
 
   // Top Progress Bar on Route Changes
   useEffect(() => {
+    if (isAdmin) return;
     setIsNavigating(true);
     const navTimer = setTimeout(() => {
       setIsNavigating(false);
     }, 350);
 
     return () => clearTimeout(navTimer);
-  }, [pathname]);
+  }, [pathname, isAdmin]);
+
+  if (isAdmin) return null;
 
   return (
     <>
