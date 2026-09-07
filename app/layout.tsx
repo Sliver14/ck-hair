@@ -4,6 +4,7 @@ import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/store/CartDrawer";
 import { CartToast } from "@/components/store/CartToast";
 import { InitialSplashLoader } from "@/components/ui/InitialSplashLoader";
+import { VerticalScrollIndicator } from "@/components/ui/VerticalScrollIndicator";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -36,6 +37,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className="min-h-screen flex flex-col justify-between">
         <InitialSplashLoader />
+        <VerticalScrollIndicator />
         <CartProvider>
           {children}
           <CartDrawer />
