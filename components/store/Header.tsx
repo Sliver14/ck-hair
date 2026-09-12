@@ -250,41 +250,26 @@ export function Header({
                       return (
                         <div key={link.href} className="space-y-1">
                           {/* Shop Main Row with Accordion Toggle */}
-                          <div
-                            className={`flex items-center justify-between rounded-lg transition-colors ${
-                              isShopActive ? "bg-[#FAF6F2]/80" : ""
+                          <button
+                            type="button"
+                            onClick={() => setIsMobileShopOpen((prev) => !prev)}
+                            className={`w-full flex items-center justify-between rounded-lg py-2.5 px-2 text-left transition-colors ${
+                              isShopActive
+                                ? "bg-[#FAF6F2] text-brand-dark font-bold border-l-2 border-[#B76E79]"
+                                : "text-brand-muted hover:text-brand-dark hover:bg-brand-sand/30"
                             }`}
+                            aria-label={isMobileShopOpen ? "Collapse Shop categories" : "Expand Shop categories"}
+                            aria-expanded={isMobileShopOpen}
                           >
-                            <Link
-                              href="/shop"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                              className={`flex-1 text-sm uppercase tracking-widest font-medium py-2.5 ${
-                                pathname === "/shop"
-                                  ? "text-brand-dark font-bold pl-2 border-l-2 border-[#B76E79]"
-                                  : isShopActive
-                                  ? "text-brand-dark font-bold pl-2 border-l-2 border-brand-dark"
-                                  : "text-brand-muted hover:text-brand-dark"
-                              }`}
-                            >
+                            <span className="text-sm uppercase tracking-widest font-medium">
                               {link.label}
-                            </Link>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setIsMobileShopOpen((prev) => !prev);
-                              }}
-                              className="p-2 text-brand-muted hover:text-brand-dark focus:outline-hidden"
-                              aria-label={isMobileShopOpen ? "Collapse Shop categories" : "Expand Shop categories"}
-                              aria-expanded={isMobileShopOpen}
-                            >
-                              <ChevronDown
-                                className={`w-4 h-4 transition-transform duration-200 ${
-                                  isMobileShopOpen ? "rotate-180 text-brand-dark" : "text-brand-muted"
-                                }`}
-                              />
-                            </button>
-                          </div>
+                            </span>
+                            <ChevronDown
+                              className={`w-4 h-4 transition-transform duration-200 ${
+                                isMobileShopOpen ? "rotate-180 text-brand-dark" : "text-brand-muted"
+                              }`}
+                            />
+                          </button>
 
                           {/* Submenu Categories List */}
                           {isMobileShopOpen && (
