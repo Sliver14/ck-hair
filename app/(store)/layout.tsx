@@ -1,5 +1,6 @@
 import React from "react";
 import { getStoreSettings, getHomepageSettings } from "@/lib/db/settings";
+import { getCategories } from "@/lib/db/products";
 import { Header } from "@/components/store/Header";
 import { Footer } from "@/components/store/Footer";
 import { AnnouncementBar } from "@/components/store/AnnouncementBar";
@@ -12,9 +13,10 @@ export default async function StoreLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [storeSettings, homepageSettings] = await Promise.all([
+  const [storeSettings, homepageSettings, categories] = await Promise.all([
     getStoreSettings(),
     getHomepageSettings(),
+    getCategories(),
   ]);
 
   if (storeSettings.storeStatus === "OFFLINE") {
@@ -26,6 +28,15 @@ export default async function StoreLayout({
     );
   }
 
+  // Sanitize categories for Client Component props
+  const serializedCategories = categories.map((cat) => ({
+    id: cat.id,
+    name: cat.name,
+    slug: cat.slug,
+    description: cat.description,
+    image: cat.image,
+  }));
+
   return (
     <div className="flex flex-col min-h-screen">
       <AnnouncementBar
@@ -35,6 +46,7 @@ export default async function StoreLayout({
       <Header
         storeName={storeSettings.storeName}
         whatsapp={storeSettings.whatsapp}
+        categories={serializedCategories}
       />
       <main className="flex-1">{children}</main>
       <Footer
