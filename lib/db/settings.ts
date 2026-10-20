@@ -81,7 +81,7 @@ export async function getHomepageSettings() {
       id: "default",
       heroTitle: "UNCOMPROMISED LUXURY.\nEFFORTLESS CONFIDENCE.",
       heroSubtitle: "Discover Nigeria's premier destination for couture Raw Human Hair, signature Anna Fiber Braiding & Wefts, and invisible HD Lace crafted for royalty.",
-      heroImage: "/ck-hair/ck-hair-01.jpeg",
+      heroImage: "/ck-hair/hero-model.jpg",
       primaryCtaText: "EXPLORE COLLECTION",
       primaryCtaLink: "/shop",
       secondaryCtaText: "PRE-ORDER EXCLUSIVES",

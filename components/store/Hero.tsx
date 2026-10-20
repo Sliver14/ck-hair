@@ -15,7 +15,7 @@ interface HeroProps {
 export function Hero({
   title = "UNCOMPROMISED LUXURY.\nEFFORTLESS CONFIDENCE.",
   subtitle = "Discover Nigeria's premier destination for couture Raw Human Hair, signature Anna Fiber Braiding & Wefts, and invisible HD Lace crafted for royalty.",
-  image = "/ck-hair/ck-hair-01.jpeg",
+  image = "/ck-hair/hero-model.jpg",
   primaryCtaText = "EXPLORE COLLECTION",
   primaryCtaLink = "/shop",
   secondaryCtaText = "PRE-ORDER EXCLUSIVES",
@@ -83,7 +83,7 @@ export function Hero({
 
               <div className="relative aspect-[4/5] sm:aspect-[1/1] lg:aspect-[4/5] max-h-[min(540px,62vh)] rounded-2xl overflow-hidden shadow-2xl border border-white/80 bg-white">
                 <img
-                  src={image || "/ck-hair/ck-hair-01.jpeg"}
+                  src={image || "/ck-hair/hero-model.jpg"}
                   alt="CK Hair Luxury Wig Model"
                   className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700 ease-out"
                 />

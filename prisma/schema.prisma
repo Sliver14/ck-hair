@@ -223,7 +223,7 @@ model HomepageSettings {
   id                     String   @id @default("default")
   heroTitle              String   @default("LUXURY HAIR.\nEFFORTLESS CONFIDENCE.")
   heroSubtitle           String   @default("Premium 100% human and raw hair crafted to elevate your everyday beauty.")
-  heroImage              String   @default("/ck-hair/ck-hair-01.jpeg")
+  heroImage              String   @default("/ck-hair/hero-model.jpg")
   primaryCtaText         String   @default("SHOP COLLECTION")
   primaryCtaLink         String   @default("/shop")
   secondaryCtaText       String   @default("PRE-ORDER")
